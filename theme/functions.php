@@ -184,13 +184,42 @@ add_action( 'init', 'donarturo_seed_elementor_kit', 20 );
  * including if Elementor Pro is activated after the theme.
  * ------------------------------------------------------------------------- */
 
+/**
+ * The templates are generated with images pointing at the production
+ * domain (donarturo.somosdonarturo.gt style URL baked in at build time).
+ * Rewrite that to wherever this copy of the theme is actually running —
+ * a staging subdomain, localhost, whatever — so images work everywhere,
+ * not only on the one domain the templates were generated for.
+ */
+function donarturo_rewrite_image_domain( $json_text ) {
+	return str_replace(
+		'https://somosdonarturo.gt/wp-content/themes/donarturo/assets/images',
+		get_stylesheet_directory_uri() . '/assets/images',
+		$json_text
+	);
+}
+
 function donarturo_load_template_content( $filename ) {
 	$path = get_stylesheet_directory() . '/elementor-templates/' . $filename;
 	if ( ! file_exists( $path ) ) {
 		return null;
 	}
-	$data = json_decode( file_get_contents( $path ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	$raw  = donarturo_rewrite_image_domain( file_get_contents( $path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	$data = json_decode( $raw, true );
 	return isset( $data['content'] ) ? $data['content'] : null;
+}
+
+/**
+ * Repairs a page/template that was created before this fix shipped (its
+ * _elementor_data still has the production image URL baked in).
+ */
+function donarturo_fix_image_domain_on( $post_id ) {
+	$raw = get_post_meta( $post_id, '_elementor_data', true );
+	if ( ! $raw || false === strpos( $raw, 'somosdonarturo.gt/wp-content/themes/donarturo/assets/images' ) ) {
+		return;
+	}
+	$fixed = donarturo_rewrite_image_domain( $raw );
+	update_post_meta( $post_id, '_elementor_data', wp_slash( $fixed ) );
 }
 
 function donarturo_set_elementor_data( $post_id, $content ) {
@@ -366,7 +395,11 @@ function donarturo_provision_site() {
 			$page = get_page_by_path( $slug );
 			if ( $page ) {
 				donarturo_ensure_full_width_template( $page->ID );
+				donarturo_fix_image_domain_on( $page->ID );
 			}
+		}
+		foreach ( get_posts( array( 'post_type' => 'elementor_library', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids' ) ) as $tpl_id ) {
+			donarturo_fix_image_domain_on( $tpl_id );
 		}
 		return;
 	}
