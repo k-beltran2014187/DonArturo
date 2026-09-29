@@ -1,0 +1,82 @@
+/**
+ * Don Arturo — brand tokens and small enhancements Elementor's UI doesn't cover.
+ * Page layout, sections and animation are built and edited in Elementor Pro;
+ * this file only carries what has to live outside the page builder.
+ */
+
+:root {
+	--da-navy: #0B2D52;
+	--da-navy-deep: #071D37;
+	--da-blue: #00539A;
+	--da-red: #C62B1F;
+	--da-red-deep: #A02016;
+	--da-base: #F7F4EE;
+	--da-surface: #FFFFFF;
+	--da-ink: #14181C;
+	--da-ink-soft: #4B5563;
+	--da-line: #E4DED2;
+
+	--da-font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+	--da-font-body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+@font-face {
+	font-family: "Space Grotesk";
+	font-style: normal;
+	font-weight: 300 700;
+	font-display: swap;
+	src: url("../fonts/space-grotesk-var.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: normal;
+	font-weight: 300 700;
+	font-display: swap;
+	src: url("../fonts/work-sans-var.woff2") format("woff2");
+}
+
+body {
+	background: var(--da-base);
+	color: var(--da-ink);
+	font-family: var(--da-font-body);
+}
+
+h1, h2, h3, h4, h5, h6,
+.elementor-heading-title {
+	font-family: var(--da-font-display);
+	letter-spacing: -0.01em;
+}
+
+/* Links and buttons get a quiet, consistent press/hover feel that Elementor's
+   own hover-animation presets don't quite give (subtle, not a bounce). */
+a,
+.elementor-button {
+	transition: color 0.18s ease, background-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+}
+
+.elementor-button:active {
+	transform: translateY(1px);
+}
+
+/* Header gets a soft shadow once the page scrolls — matches the "invisible
+   expensive stuff" checklist item without needing a heavier JS library. */
+.da-header {
+	transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.da-header.is-scrolled {
+	box-shadow: 0 1px 0 var(--da-line), 0 12px 24px -18px rgba(11, 45, 82, 0.35);
+}
+
+/* Respect reduced motion for anything Elementor's own controls miss. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
