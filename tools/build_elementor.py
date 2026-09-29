@@ -82,6 +82,18 @@ def text(html, align=None, color=None):
 
 
 def button(label, url, style="primary"):
+    """
+    style:
+      primary      - solid accent red (default). Only use on light/base or
+                      navy backgrounds — blends in on a red background.
+      ghost        - transparent, ink-colored border/text. For light (base/
+                      surface) backgrounds.
+      outline-light - transparent, white border/text. For dark (navy/red)
+                      backgrounds.
+      solid-light  - solid white background, navy text. Use as the primary
+                      CTA on a red-background section, where a red button
+                      would disappear.
+    """
     s = {
         "text": label,
         "link": {"url": url, "is_external": "", "nofollow": ""},
@@ -89,11 +101,40 @@ def button(label, url, style="primary"):
     }
     if style == "ghost":
         s["background_color"] = "transparent"
+        s["button_text_color"] = INK
+        s["border_border"] = "solid"
+        s["border_width"] = px(2)
+        s["border_color"] = INK
+    elif style == "outline-light":
+        s["background_color"] = "transparent"
         s["button_text_color"] = "#FFFFFF"
         s["border_border"] = "solid"
         s["border_width"] = px(2)
         s["border_color"] = "#FFFFFF"
+    elif style == "solid-light":
+        s["background_color"] = "#FFFFFF"
+        s["button_text_color"] = NAVY_DEEP
     return widget("button", s)
+
+
+def animate(el, anim="fadeInUp", delay=0):
+    """
+    Native Elementor entrance animation (Advanced tab -> Motion Effects),
+    so it stays editable by the client afterward — not custom JS. Used
+    selectively with small staggers, not on every single element.
+    """
+    el["settings"]["_animation"] = anim
+    if delay:
+        el["settings"]["_animation_delay"] = delay
+    return el
+
+
+def stagger(cols, anim="fadeInUp", base_delay=0, step=90):
+    """Applies a staggered entrance animation to a list of col() containers
+    (or widgets), animating the container itself."""
+    for i, c in enumerate(cols):
+        animate(c, anim, base_delay + i * step)
+    return cols
 
 
 def icon_box(icon, title, desc, title_color=None):
@@ -252,54 +293,55 @@ def build_footer():
 # INICIO
 # ===========================================================================
 def build_inicio():
-    eyebrow = text("28 AÑOS DE SERVICIO COMPLETO", color=RED)
-    h1 = heading("Movemos a Guatemala.", tag="h1", size=56)
-    lead = text(
+    eyebrow = animate(text("28 AÑOS DE SERVICIO COMPLETO", color=RED), "fadeInUp", 0)
+    h1 = animate(heading("Movemos a Guatemala.", tag="h1", size=56), "fadeInUp", 90)
+    lead = animate(text(
         "Desde 1998, la marca guatemalteca de estaciones de servicio que acompaña "
         "a los guatemaltecos en sus rutas cada día. Combustible de alta calidad, "
         "a un precio justo y de forma exacta.",
         color="#3A4550",
-    )
+    ), "fadeInUp", 180)
     ctas = row([
         col([button("Ver ubicaciones", "/ubicaciones/")], grow=0),
         col([button("Conoce nuestros servicios", "/servicios/", style="ghost")], grow=0),
     ], gap=16, align_items="center", wrap="wrap")
     ctas["settings"]["padding"] = px(0)
+    animate(ctas, "fadeInUp", 270)
 
     hero_copy = col([eyebrow, h1, lead, ctas], grow=1)
-    hero_photo = col([image_widget("hero-pump-attendants.jpg", "Especialistas Don Arturo en isla de despacho")], grow=1)
+    hero_photo = animate(col([image_widget("hero-pump-attendants.jpg", "Especialistas Don Arturo en isla de despacho")], grow=1), "fadeIn", 200)
 
     hero = row([hero_copy, hero_photo], gap=56, align_items="center")
     hero_section = section([hero], bg=BASE, padding=(120, 24), gap=0)
 
     # Stats bar
-    stats = row([
+    stats = row(stagger([
         col([icon_box("fa-gas-pump", "+160", "Estaciones de servicio", title_color="#FFFFFF")], grow=1),
         col([icon_box("fa-map-marked-alt", "19", "Departamentos", title_color="#FFFFFF")], grow=1),
         col([icon_box("fa-calendar-alt", "28", "Años de servicio", title_color="#FFFFFF")], grow=1),
         col([icon_box("fa-users", "+1,500", "Familias guatemaltecas", title_color="#FFFFFF")], grow=1),
-    ], gap=24)
+    ]), gap=24)
     for c in stats["elements"]:
         for w in c["elements"]:
             w["settings"]["description_text_color"] = "#C9D3DE"
     stats_section = section([stats], bg=NAVY, padding=(56, 24), gap=0)
 
     # Productos
-    prod_title = heading("Alta calidad para los guatemaltecos", tag="h2", align="center", size=40)
+    prod_title = animate(heading("Alta calidad para los guatemaltecos", tag="h2", align="center", size=40), "fadeInUp")
     prod_lead = text(
         "Combustible, lubricantes y Rinobilletes para que puedas llegar más lejos.",
         align="center", color="#3A4550",
     )
-    products = row([
+    products = row(stagger([
         col([icon_box("fa-oil-can", "Combustibles Ultra", "Nuestros combustibles ahora con Ultra, el aditivo de los guatemaltecos.")], grow=1),
         col([icon_box("fa-tint", "Lubricantes", "Conoce el amplio catálogo de productos para el cuidado de tu motor.")], grow=1),
         col([icon_box("fa-mobile-alt", "Rinobilletes", "Nuestro combustible digital: lleva el control de tus consumos o regala en toda ocasión.")], grow=1),
-    ], gap=32)
+    ]), gap=32)
     products_section = section([prod_title, prod_lead, products], bg=SURFACE, padding=(96, 24))
 
     # Ubicaciones teaser
-    map_img = col([image_widget("mapa-cobertura.png", "Mapa de cobertura Don Arturo en Guatemala")], grow=1)
-    map_copy = col([
+    map_img = animate(col([image_widget("mapa-cobertura.png", "Mapa de cobertura Don Arturo en Guatemala")], grow=1), "fadeIn", 100)
+    map_copy = animate(col([
         text("UBICACIONES", color=RED),
         heading("+160 estaciones de servicio", tag="h2", size=40),
         text(
@@ -309,45 +351,45 @@ def build_inicio():
             color="#3A4550",
         ),
         button("Ver todas las ubicaciones", "/ubicaciones/"),
-    ], grow=1)
+    ], grow=1), "fadeInUp")
     map_row = row([map_copy, map_img], gap=56, align_items="center")
     map_section = section([map_row], bg=BASE, padding=(96, 24), gap=0)
 
     # Servicios adicionales
-    serv_title = heading("Servicios adicionales, por tu confianza", tag="h2", align="center", size=40)
+    serv_title = animate(heading("Servicios adicionales, por tu confianza", tag="h2", align="center", size=40), "fadeInUp")
     serv_lead = text(
         "Además de tu servicio completo gratis, tenemos una amplia gama de "
         "servicios que ponemos a tu disposición. ¡Gracias por tu confianza!",
         align="center", color="#3A4550",
     )
-    services = row([
+    services = row(stagger([
         col([icon_box("fa-truck-moving", "Control de Flotas", "La plataforma para mantener tu flotilla siempre abastecida de combustible.")], grow=1),
         col([icon_box("fa-motorcycle", "Taller de Moto", "Mantén tu moto siempre al 100.")], grow=1),
         col([icon_box("fa-store", "Doña Aurora", "Nuestras tiendas de conveniencia con el toque guatemalteco.")], grow=1),
-    ], gap=32)
-    services2 = row([
+    ]), gap=32)
+    services2 = row(stagger([
         col([icon_box("fa-car-side", "Lavado rápido", "Un servicio adicional gratuito por tu consumo de combustible.")], grow=1),
         col([icon_box("fa-coffee", "Oasis", "Un cafecito o un fresquito por tu visita.")], grow=1),
         col([icon_box("fa-charging-station", "Estación de carga", "¿Usas vehículo eléctrico? Somos especialistas en mover a Guatemala.")], grow=1),
-    ], gap=32)
+    ]), gap=32)
     services_cta = row([col([button("Ver todos los servicios", "/servicios/", style="ghost")], grow=0)], gap=0, align_items="center")
     services_cta["settings"]["flex_justify_content"] = "center"
     services_section = section([serv_title, serv_lead, services, services2, services_cta], bg=SURFACE, padding=(96, 24))
 
     # Identity quote
-    quote = heading(
+    quote = animate(heading(
         "“Cada ruta y cada kilómetro lo recorremos con la fuerza y la determinación "
         "de un rinoceronte, siempre vigilantes y con la vista hacia adelante.”",
         tag="h2", align="center", color="#FFFFFF", size=34,
-    )
+    ), "fadeIn")
     quote_sub = text("Especialistas en mover a Guatemala.", align="center", color="#C9D3DE")
     quote_section = section([quote, quote_sub], bg=NAVY_DEEP, padding=(112, 24))
 
     # Final CTA
-    cta_h = heading("Visítanos y prueba nuestro servicio completo, gratis.", tag="h2", align="center", color="#FFFFFF", size=36)
+    cta_h = animate(heading("Visítanos y prueba nuestro servicio completo, gratis.", tag="h2", align="center", color="#FFFFFF", size=36), "fadeInUp")
     cta_btns = row([
-        col([button("Encuentra tu estación", "/ubicaciones/")], grow=0),
-        col([button("Llámanos: +502 2318-2222", "tel:+50223182222", style="ghost")], grow=0),
+        col([button("Encuentra tu estación", "/ubicaciones/", style="solid-light")], grow=0),
+        col([button("Llámanos: +502 2318-2222", "tel:+50223182222", style="outline-light")], grow=0),
     ], gap=16, align_items="center", wrap="wrap")
     cta_btns["settings"]["flex_justify_content"] = "center"
     cta_btns["settings"]["padding"] = px(0)
@@ -363,7 +405,7 @@ def build_inicio():
 # QUIENES SOMOS
 # ===========================================================================
 def build_quienes_somos():
-    hero_copy = col([
+    hero_copy = animate(col([
         text("¿QUIÉNES SOMOS?", color=RED),
         heading("Fundado desde 1998 y de origen 100% guatemalteco.", tag="h1", size=44),
         text(
@@ -373,8 +415,8 @@ def build_quienes_somos():
             "nacional, impulsando el desarrollo social del país.",
             color="#3A4550",
         ),
-    ], grow=1)
-    hero_photo = col([image_widget("quienes-somos-1.jpg", "Equipo Don Arturo en estación de servicio")], grow=1)
+    ], grow=1), "fadeInUp")
+    hero_photo = animate(col([image_widget("quienes-somos-1.jpg", "Equipo Don Arturo en estación de servicio")], grow=1), "fadeIn", 150)
     hero_row = row([hero_copy, hero_photo], gap=56, align_items="center")
     hero_section = section([hero_row], bg=BASE, padding=(112, 24), gap=0)
 
@@ -457,7 +499,7 @@ def build_quienes_somos():
 # UBICACIONES
 # ===========================================================================
 def build_ubicaciones():
-    hero_copy = col([
+    hero_copy = animate(col([
         text("UBICACIONES", color=RED),
         heading("+160 estaciones de servicio", tag="h1", size=48),
         text(
@@ -467,8 +509,8 @@ def build_ubicaciones():
             color="#3A4550",
         ),
         row([col([button("Llámanos: +502 2318-2222", "tel:+50223182222")], grow=0)], gap=0),
-    ], grow=1)
-    hero_photo = col([image_widget("mapa-cobertura.png", "Mapa de cobertura de Gasolineras Don Arturo")], grow=1)
+    ], grow=1), "fadeInUp")
+    hero_photo = animate(col([image_widget("mapa-cobertura.png", "Mapa de cobertura de Gasolineras Don Arturo")], grow=1), "fadeIn", 150)
     hero_row = row([hero_copy, hero_photo], gap=56, align_items="center")
     hero_section = section([hero_row], bg=BASE, padding=(112, 24), gap=0)
 
@@ -523,7 +565,7 @@ def build_ubicaciones():
 # SERVICIOS (summary)
 # ===========================================================================
 def build_servicios():
-    hero_copy = col([
+    hero_copy = animate(col([
         text("SERVICIOS", color=RED),
         heading("Servicios adicionales, por tu confianza", tag="h1", size=44),
         text(
@@ -532,8 +574,8 @@ def build_servicios():
             "¡Gracias por tu confianza!",
             color="#3A4550",
         ),
-    ], grow=1)
-    hero_photo = col([image_widget("centro-de-moto.jpg", "Centro de Moto Don Arturo")], grow=1)
+    ], grow=1), "fadeInUp")
+    hero_photo = animate(col([image_widget("centro-de-moto.jpg", "Centro de Moto Don Arturo")], grow=1), "fadeIn", 150)
     hero_row = row([hero_copy, hero_photo], gap=56, align_items="center")
     hero_section = section([hero_row], bg=BASE, padding=(112, 24), gap=0)
 
@@ -562,7 +604,7 @@ def build_servicios():
     grid_section = section([*rows, note], bg=SURFACE, padding=(96, 24))
 
     cta_h = heading("¿Quieres más información de algún servicio?", tag="h2", align="center", color="#FFFFFF", size=32)
-    cta_btn = row([col([button("Contáctanos", "/contacto/")], grow=0)], gap=0)
+    cta_btn = row([col([button("Contáctanos", "/contacto/", style="solid-light")], grow=0)], gap=0)
     cta_btn["settings"]["flex_justify_content"] = "center"
     cta_section = section([cta_h, cta_btn], bg=RED, padding=(80, 24))
 
@@ -581,7 +623,7 @@ GT_DEPARTMENTS = [
 
 
 def build_contacto():
-    hero_copy = col([
+    hero_copy = animate(col([
         text("CONTACTO", color=RED),
         heading("Contáctanos", tag="h1", size=44),
         text(
@@ -595,7 +637,7 @@ def build_contacto():
             "<a href=\"mailto:info@somosdonarturo.gt\" style=\"color:" + BLUE + "\">info@somosdonarturo.gt</a>",
             color="#3A4550",
         ),
-    ], grow=1)
+    ], grow=1), "fadeInUp")
 
     form_fields = [
         {"_id": eid(), "custom_id": "nombre", "field_label": "Nombre y Apellido", "field_type": "text", "required": "true", "width": "100"},

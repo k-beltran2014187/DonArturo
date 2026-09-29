@@ -52,7 +52,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp"
               },
               "elements": [
                 {
@@ -103,7 +104,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeIn",
+                "_animation_delay": 150
               },
               "elements": [
                 {
@@ -543,7 +546,9 @@
                       "is_external": "",
                       "nofollow": ""
                     },
-                    "size": "md"
+                    "size": "md",
+                    "background_color": "#FFFFFF",
+                    "button_text_color": "#071D37"
                   },
                   "elements": []
                 }

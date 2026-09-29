@@ -61,7 +61,8 @@
                   "widgetType": "text-editor",
                   "settings": {
                     "editor": "<p>28 AÑOS DE SERVICIO COMPLETO</p>",
-                    "text_color": "#C62B1F"
+                    "text_color": "#C62B1F",
+                    "_animation": "fadeInUp"
                   },
                   "elements": []
                 },
@@ -76,7 +77,9 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 56
-                    }
+                    },
+                    "_animation": "fadeInUp",
+                    "_animation_delay": 90
                   },
                   "elements": []
                 },
@@ -86,7 +89,9 @@
                   "widgetType": "text-editor",
                   "settings": {
                     "editor": "<p>Desde 1998, la marca guatemalteca de estaciones de servicio que acompaña a los guatemaltecos en sus rutas cada día. Combustible de alta calidad, a un precio justo y de forma exacta.</p>",
-                    "text_color": "#3A4550"
+                    "text_color": "#3A4550",
+                    "_animation": "fadeInUp",
+                    "_animation_delay": 180
                   },
                   "elements": []
                 },
@@ -114,7 +119,9 @@
                       "bottom": "0",
                       "left": "0",
                       "isLinked": false
-                    }
+                    },
+                    "_animation": "fadeInUp",
+                    "_animation_delay": 270
                   },
                   "elements": [
                     {
@@ -174,7 +181,7 @@
                             },
                             "size": "md",
                             "background_color": "transparent",
-                            "button_text_color": "#FFFFFF",
+                            "button_text_color": "#14181C",
                             "border_border": "solid",
                             "border_width": {
                               "unit": "px",
@@ -184,7 +191,7 @@
                               "left": "2",
                               "isLinked": false
                             },
-                            "border_color": "#FFFFFF"
+                            "border_color": "#14181C"
                           },
                           "elements": []
                         }
@@ -207,7 +214,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeIn",
+                "_animation_delay": 200
               },
               "elements": [
                 {
@@ -286,7 +295,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp"
               },
               "elements": [
                 {
@@ -319,7 +329,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 90
               },
               "elements": [
                 {
@@ -352,7 +364,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 180
               },
               "elements": [
                 {
@@ -385,7 +399,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 270
               },
               "elements": [
                 {
@@ -449,7 +465,8 @@
             "typography_font_size": {
               "unit": "px",
               "size": 40
-            }
+            },
+            "_animation": "fadeInUp"
           },
           "elements": []
         },
@@ -493,7 +510,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp"
               },
               "elements": [
                 {
@@ -524,7 +542,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 90
               },
               "elements": [
                 {
@@ -555,7 +575,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 180
               },
               "elements": [
                 {
@@ -634,7 +656,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp"
               },
               "elements": [
                 {
@@ -700,7 +723,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeIn",
+                "_animation_delay": 100
               },
               "elements": [
                 {
@@ -762,7 +787,8 @@
             "typography_font_size": {
               "unit": "px",
               "size": 40
-            }
+            },
+            "_animation": "fadeInUp"
           },
           "elements": []
         },
@@ -806,7 +832,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp"
               },
               "elements": [
                 {
@@ -837,7 +864,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 90
               },
               "elements": [
                 {
@@ -868,7 +897,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 180
               },
               "elements": [
                 {
@@ -921,7 +952,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp"
               },
               "elements": [
                 {
@@ -952,7 +984,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 90
               },
               "elements": [
                 {
@@ -983,7 +1017,9 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "_animation": "fadeInUp",
+                "_animation_delay": 180
               },
               "elements": [
                 {
@@ -1053,7 +1089,7 @@
                     },
                     "size": "md",
                     "background_color": "transparent",
-                    "button_text_color": "#FFFFFF",
+                    "button_text_color": "#14181C",
                     "border_border": "solid",
                     "border_width": {
                       "unit": "px",
@@ -1063,7 +1099,7 @@
                       "left": "2",
                       "isLinked": false
                     },
-                    "border_color": "#FFFFFF"
+                    "border_color": "#14181C"
                   },
                   "elements": []
                 }
@@ -1112,7 +1148,8 @@
             "typography_font_size": {
               "unit": "px",
               "size": 34
-            }
+            },
+            "_animation": "fadeIn"
           },
           "elements": []
         },
@@ -1166,7 +1203,8 @@
             "typography_font_size": {
               "unit": "px",
               "size": 36
-            }
+            },
+            "_animation": "fadeInUp"
           },
           "elements": []
         },
@@ -1222,7 +1260,9 @@
                       "is_external": "",
                       "nofollow": ""
                     },
-                    "size": "md"
+                    "size": "md",
+                    "background_color": "#FFFFFF",
+                    "button_text_color": "#071D37"
                   },
                   "elements": []
                 }

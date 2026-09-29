@@ -65,7 +65,8 @@
                       "unit": "%",
                       "size": 100
                     },
-                    "_flex_size": "grow"
+                    "_flex_size": "grow",
+                    "_animation": "fadeInUp"
                   },
                   "elements": [
                     {

@@ -189,6 +189,19 @@ function donarturo_set_elementor_data( $post_id, $content ) {
 }
 
 /**
+ * "Elementor Full Width" keeps the theme's header/footer (so our Theme
+ * Builder templates render) but drops WordPress's own page title and
+ * content wrapper — without this, Hello Elementor prints the default
+ * site title + "Inicio" as a plain <h1> above the real hero.
+ */
+function donarturo_ensure_full_width_template( $post_id ) {
+	$current = get_page_template_slug( $post_id );
+	if ( 'elementor_header_footer' !== $current ) {
+		update_post_meta( $post_id, '_wp_page_template', 'elementor_header_footer' );
+	}
+}
+
+/**
  * Creates the 5 Phase 1 pages (skips any that already exist by slug) and
  * returns an array of slug => page ID.
  */
@@ -206,6 +219,7 @@ function donarturo_provision_pages() {
 	foreach ( $pages as $slug => $page ) {
 		$existing = get_page_by_path( $slug );
 		if ( $existing ) {
+			donarturo_ensure_full_width_template( $existing->ID );
 			$ids[ $slug ] = $existing->ID;
 			continue;
 		}
@@ -228,6 +242,7 @@ function donarturo_provision_pages() {
 		if ( $content ) {
 			donarturo_set_elementor_data( $post_id, $content );
 		}
+		donarturo_ensure_full_width_template( $post_id );
 
 		$ids[ $slug ] = $post_id;
 	}
@@ -332,9 +347,16 @@ function donarturo_provision_site() {
 		return;
 	}
 	if ( get_option( 'donarturo_provisioned' ) ) {
-		// Still worth checking the header/footer in case Elementor Pro was
-		// activated after the first run (they need Pro to exist at all).
+		// Still worth checking on every load: the header/footer in case
+		// Elementor Pro was activated after the first run, and the page
+		// template on pages created before this fix shipped.
 		donarturo_provision_theme_parts();
+		foreach ( array( 'inicio', 'quienes-somos', 'ubicaciones', 'servicios', 'contacto' ) as $slug ) {
+			$page = get_page_by_path( $slug );
+			if ( $page ) {
+				donarturo_ensure_full_width_template( $page->ID );
+			}
+		}
 		return;
 	}
 
