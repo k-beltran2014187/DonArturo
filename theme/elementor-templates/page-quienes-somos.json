@@ -20,7 +20,8 @@
           "isLinked": false
         },
         "background_background": "classic",
-        "background_color": "#F7F4EE"
+        "background_color": "#F7F4EE",
+        "css_classes": "da-glow"
       },
       "elements": [
         {
@@ -53,7 +54,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "css_classes": "da-reveal-group"
               },
               "elements": [
                 {
@@ -76,7 +77,7 @@
                     "typography_typography": "custom",
                     "typography_font_size": {
                       "unit": "px",
-                      "size": 44
+                      "size": 48
                     }
                   },
                   "elements": []
@@ -105,8 +106,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeIn",
-                "_animation_delay": 150
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {
@@ -222,7 +222,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "css_classes": "da-reveal"
               },
               "elements": [
                 {
@@ -245,7 +246,7 @@
                     "typography_typography": "custom",
                     "typography_font_size": {
                       "unit": "px",
-                      "size": 36
+                      "size": 40
                     }
                   },
                   "elements": []
@@ -273,7 +274,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {
@@ -334,8 +336,9 @@
             "typography_typography": "custom",
             "typography_font_size": {
               "unit": "px",
-              "size": 36
-            }
+              "size": 40
+            },
+            "css_classes": "da-reveal"
           },
           "elements": []
         },
@@ -367,6 +370,7 @@
               "unit": "%",
               "size": 100
             },
+            "css_classes": "da-reveal-group",
             "flex_justify_content": "center"
           },
           "elements": [
@@ -395,6 +399,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -427,6 +440,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -459,6 +481,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -491,6 +522,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -523,6 +563,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -555,6 +604,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -587,6 +645,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -619,6 +686,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -651,6 +727,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -683,6 +768,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -715,6 +809,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -747,6 +850,15 @@
                     "typography_font_size": {
                       "unit": "px",
                       "size": 20
+                    },
+                    "css_classes": "da-card",
+                    "padding": {
+                      "unit": "px",
+                      "top": "14",
+                      "right": "22",
+                      "bottom": "14",
+                      "left": "22",
+                      "isLinked": false
                     }
                   },
                   "elements": []
@@ -812,7 +924,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "css_classes": "da-reveal"
               },
               "elements": [
                 {
@@ -825,7 +938,7 @@
                     "typography_typography": "custom",
                     "typography_font_size": {
                       "unit": "px",
-                      "size": 32
+                      "size": 34
                     }
                   },
                   "elements": []
@@ -853,7 +966,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {
@@ -914,8 +1028,9 @@
             "typography_typography": "custom",
             "typography_font_size": {
               "unit": "px",
-              "size": 36
-            }
+              "size": 40
+            },
+            "css_classes": "da-reveal"
           },
           "elements": []
         },
@@ -946,7 +1061,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -973,7 +1089,8 @@
                       "alt": "Especialista Don Arturo",
                       "source": "library"
                     },
-                    "image_size": "large"
+                    "image_size": "large",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -1004,7 +1121,8 @@
                       "alt": "Equipo Don Arturo",
                       "source": "library"
                     },
-                    "image_size": "large"
+                    "image_size": "large",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }

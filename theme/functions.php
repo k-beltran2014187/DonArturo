@@ -26,14 +26,25 @@ function donarturo_enqueue_assets() {
 	);
 
 	wp_enqueue_script(
-		'donarturo-brand',
-		get_stylesheet_directory_uri() . '/assets/js/brand.js',
+		'gsap',
+		get_stylesheet_directory_uri() . '/assets/js/vendor/gsap.min.js',
 		array(),
-		donarturo_asset_version( 'assets/js/brand.js' ),
-		array(
-			'in_footer' => true,
-			'strategy'  => 'defer',
-		)
+		'3.12.5',
+		array( 'in_footer' => true )
+	);
+	wp_enqueue_script(
+		'gsap-scrolltrigger',
+		get_stylesheet_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js',
+		array( 'gsap' ),
+		'3.12.5',
+		array( 'in_footer' => true )
+	);
+	wp_enqueue_script(
+		'donarturo-motion',
+		get_stylesheet_directory_uri() . '/assets/js/motion.js',
+		array( 'gsap', 'gsap-scrolltrigger' ),
+		donarturo_asset_version( 'assets/js/motion.js' ),
+		array( 'in_footer' => true )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'donarturo_enqueue_assets' );
@@ -42,7 +53,7 @@ add_action( 'wp_enqueue_scripts', 'donarturo_enqueue_assets' );
  * Preload the two brand fonts used above the fold on every page.
  */
 function donarturo_preload_fonts() {
-	foreach ( array( 'space-grotesk-var.woff2', 'work-sans-var.woff2' ) as $font ) {
+	foreach ( array( 'outfit-var.woff2', 'rubik-var.woff2' ) as $font ) {
 		printf(
 			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
 			esc_url( get_stylesheet_directory_uri() . '/assets/fonts/' . $font )
@@ -124,30 +135,30 @@ function donarturo_seed_elementor_kit() {
 		$settings['system_typography'] = array(
 			array(
 				'_id'                          => 'primary',
-				'title'                        => 'Titulares — Space Grotesk',
+				'title'                        => 'Titulares — Outfit',
 				'typography_typography'       => 'custom',
-				'typography_font_family'      => 'Space Grotesk',
+				'typography_font_family'      => 'Outfit',
 				'typography_font_weight'      => '700',
 			),
 			array(
 				'_id'                          => 'secondary',
-				'title'                        => 'Subtítulos — Space Grotesk',
+				'title'                        => 'Subtítulos — Outfit',
 				'typography_typography'       => 'custom',
-				'typography_font_family'      => 'Space Grotesk',
+				'typography_font_family'      => 'Outfit',
 				'typography_font_weight'      => '500',
 			),
 			array(
 				'_id'                          => 'text',
-				'title'                        => 'Texto — Work Sans',
+				'title'                        => 'Texto — Rubik',
 				'typography_typography'       => 'custom',
-				'typography_font_family'      => 'Work Sans',
+				'typography_font_family'      => 'Rubik',
 				'typography_font_weight'      => '400',
 			),
 			array(
 				'_id'                          => 'accent',
-				'title'                        => 'Botones — Work Sans',
+				'title'                        => 'Botones — Rubik',
 				'typography_typography'       => 'custom',
-				'typography_font_family'      => 'Work Sans',
+				'typography_font_family'      => 'Rubik',
 				'typography_font_weight'      => '600',
 			),
 		);

@@ -117,24 +117,34 @@ def button(label, url, style="primary"):
     return widget("button", s)
 
 
-def animate(el, anim="fadeInUp", delay=0):
-    """
-    Native Elementor entrance animation (Advanced tab -> Motion Effects),
-    so it stays editable by the client afterward — not custom JS. Used
-    selectively with small staggers, not on every single element.
-    """
-    el["settings"]["_animation"] = anim
-    if delay:
-        el["settings"]["_animation_delay"] = delay
+def add_class(el, cls):
+    """Appends to the element's Advanced > CSS Classes field."""
+    existing = el["settings"].get("css_classes", "")
+    el["settings"]["css_classes"] = (existing + " " + cls).strip()
     return el
 
 
-def stagger(cols, anim="fadeInUp", base_delay=0, step=90):
-    """Applies a staggered entrance animation to a list of col() containers
-    (or widgets), animating the container itself."""
-    for i, c in enumerate(cols):
-        animate(c, anim, base_delay + i * step)
-    return cols
+def reveal(el):
+    """Real GSAP scroll-reveal (see motion.js), not Elementor's canned list."""
+    return add_class(el, "da-reveal")
+
+
+def reveal_group(el):
+    """Children of this container stagger in via GSAP on scroll."""
+    return add_class(el, "da-reveal-group")
+
+
+def card(el, dark=False, pad=None):
+    """Raised module with shadow + GSAP hover lift."""
+    add_class(el, "da-card da-card--dark" if dark else "da-card")
+    if pad:
+        el["settings"]["padding"] = px(*pad) if isinstance(pad, tuple) else px(pad)
+    return el
+
+
+def glow(el):
+    """Radial gradient mesh behind the section (hero-style depth)."""
+    return add_class(el, "da-glow")
 
 
 def icon_box(icon, title, desc, title_color=None):
@@ -293,55 +303,55 @@ def build_footer():
 # INICIO
 # ===========================================================================
 def build_inicio():
-    eyebrow = animate(text("28 AÑOS DE SERVICIO COMPLETO", color=RED), "fadeInUp", 0)
-    h1 = animate(heading("Movemos a Guatemala.", tag="h1", size=56), "fadeInUp", 90)
-    lead = animate(text(
+    eyebrow = text("28 AÑOS DE SERVICIO COMPLETO", color=RED)
+    h1 = heading("Movemos a Guatemala.", tag="h1", size=64)
+    lead = text(
         "Desde 1998, la marca guatemalteca de estaciones de servicio que acompaña "
         "a los guatemaltecos en sus rutas cada día. Combustible de alta calidad, "
         "a un precio justo y de forma exacta.",
         color="#3A4550",
-    ), "fadeInUp", 180)
+    )
     ctas = row([
         col([button("Ver ubicaciones", "/ubicaciones/")], grow=0),
         col([button("Conoce nuestros servicios", "/servicios/", style="ghost")], grow=0),
     ], gap=16, align_items="center", wrap="wrap")
     ctas["settings"]["padding"] = px(0)
-    animate(ctas, "fadeInUp", 270)
 
-    hero_copy = col([eyebrow, h1, lead, ctas], grow=1)
-    hero_photo = animate(col([image_widget("hero-pump-attendants.jpg", "Especialistas Don Arturo en isla de despacho")], grow=1), "fadeIn", 200)
+    hero_copy = reveal_group(col([eyebrow, h1, lead, ctas], grow=1))
+    hero_photo = reveal(card(col([image_widget("hero-pump-attendants.jpg", "Especialistas Don Arturo en isla de despacho")], grow=1)))
 
     hero = row([hero_copy, hero_photo], gap=56, align_items="center")
-    hero_section = section([hero], bg=BASE, padding=(120, 24), gap=0)
+    hero_section = glow(section([hero], bg=BASE, padding=(140, 24), gap=0))
 
-    # Stats bar
-    stats = row(stagger([
-        col([icon_box("fa-gas-pump", "+160", "Estaciones de servicio", title_color="#FFFFFF")], grow=1),
-        col([icon_box("fa-map-marked-alt", "19", "Departamentos", title_color="#FFFFFF")], grow=1),
-        col([icon_box("fa-calendar-alt", "28", "Años de servicio", title_color="#FFFFFF")], grow=1),
-        col([icon_box("fa-users", "+1,500", "Familias guatemaltecas", title_color="#FFFFFF")], grow=1),
-    ]), gap=24)
+    # Stats bar — floating cards over the navy band, not a flat strip.
+    stats = reveal_group(row([
+        col([card(icon_box("fa-gas-pump", "+160", "Estaciones de servicio", title_color="#FFFFFF"), dark=True)], grow=1),
+        col([card(icon_box("fa-map-marked-alt", "19", "Departamentos", title_color="#FFFFFF"), dark=True)], grow=1),
+        col([card(icon_box("fa-calendar-alt", "28", "Años de servicio", title_color="#FFFFFF"), dark=True)], grow=1),
+        col([card(icon_box("fa-users", "+1,500", "Familias guatemaltecas", title_color="#FFFFFF"), dark=True)], grow=1),
+    ], gap=24))
     for c in stats["elements"]:
         for w in c["elements"]:
             w["settings"]["description_text_color"] = "#C9D3DE"
+            w["settings"]["padding"] = px(28, 20)
     stats_section = section([stats], bg=NAVY, padding=(56, 24), gap=0)
 
     # Productos
-    prod_title = animate(heading("Alta calidad para los guatemaltecos", tag="h2", align="center", size=40), "fadeInUp")
+    prod_title = reveal(heading("Alta calidad para los guatemaltecos", tag="h2", align="center", size=40))
     prod_lead = text(
         "Combustible, lubricantes y Rinobilletes para que puedas llegar más lejos.",
         align="center", color="#3A4550",
     )
-    products = row(stagger([
-        col([icon_box("fa-oil-can", "Combustibles Ultra", "Nuestros combustibles ahora con Ultra, el aditivo de los guatemaltecos.")], grow=1),
-        col([icon_box("fa-tint", "Lubricantes", "Conoce el amplio catálogo de productos para el cuidado de tu motor.")], grow=1),
-        col([icon_box("fa-mobile-alt", "Rinobilletes", "Nuestro combustible digital: lleva el control de tus consumos o regala en toda ocasión.")], grow=1),
-    ]), gap=32)
+    products = reveal_group(row([
+        col([card(icon_box("fa-oil-can", "Combustibles Ultra", "Nuestros combustibles ahora con Ultra, el aditivo de los guatemaltecos."))], grow=1),
+        col([card(icon_box("fa-tint", "Lubricantes", "Conoce el amplio catálogo de productos para el cuidado de tu motor."))], grow=1),
+        col([card(icon_box("fa-mobile-alt", "Rinobilletes", "Nuestro combustible digital: lleva el control de tus consumos o regala en toda ocasión."))], grow=1),
+    ], gap=32))
     products_section = section([prod_title, prod_lead, products], bg=SURFACE, padding=(96, 24))
 
     # Ubicaciones teaser
-    map_img = animate(col([image_widget("mapa-cobertura.png", "Mapa de cobertura Don Arturo en Guatemala")], grow=1), "fadeIn", 100)
-    map_copy = animate(col([
+    map_img = reveal(card(col([image_widget("mapa-cobertura.png", "Mapa de cobertura Don Arturo en Guatemala")], grow=1)))
+    map_copy = reveal(col([
         text("UBICACIONES", color=RED),
         heading("+160 estaciones de servicio", tag="h2", size=40),
         text(
@@ -351,42 +361,42 @@ def build_inicio():
             color="#3A4550",
         ),
         button("Ver todas las ubicaciones", "/ubicaciones/"),
-    ], grow=1), "fadeInUp")
+    ], grow=1))
     map_row = row([map_copy, map_img], gap=56, align_items="center")
     map_section = section([map_row], bg=BASE, padding=(96, 24), gap=0)
 
     # Servicios adicionales
-    serv_title = animate(heading("Servicios adicionales, por tu confianza", tag="h2", align="center", size=40), "fadeInUp")
+    serv_title = reveal(heading("Servicios adicionales, por tu confianza", tag="h2", align="center", size=40))
     serv_lead = text(
         "Además de tu servicio completo gratis, tenemos una amplia gama de "
         "servicios que ponemos a tu disposición. ¡Gracias por tu confianza!",
         align="center", color="#3A4550",
     )
-    services = row(stagger([
-        col([icon_box("fa-truck-moving", "Control de Flotas", "La plataforma para mantener tu flotilla siempre abastecida de combustible.")], grow=1),
-        col([icon_box("fa-motorcycle", "Taller de Moto", "Mantén tu moto siempre al 100.")], grow=1),
-        col([icon_box("fa-store", "Doña Aurora", "Nuestras tiendas de conveniencia con el toque guatemalteco.")], grow=1),
-    ]), gap=32)
-    services2 = row(stagger([
-        col([icon_box("fa-car-side", "Lavado rápido", "Un servicio adicional gratuito por tu consumo de combustible.")], grow=1),
-        col([icon_box("fa-coffee", "Oasis", "Un cafecito o un fresquito por tu visita.")], grow=1),
-        col([icon_box("fa-charging-station", "Estación de carga", "¿Usas vehículo eléctrico? Somos especialistas en mover a Guatemala.")], grow=1),
-    ]), gap=32)
+    services = reveal_group(row([
+        col([card(icon_box("fa-truck-moving", "Control de Flotas", "La plataforma para mantener tu flotilla siempre abastecida de combustible."))], grow=1),
+        col([card(icon_box("fa-motorcycle", "Taller de Moto", "Mantén tu moto siempre al 100."))], grow=1),
+        col([card(icon_box("fa-store", "Doña Aurora", "Nuestras tiendas de conveniencia con el toque guatemalteco."))], grow=1),
+    ], gap=32))
+    services2 = reveal_group(row([
+        col([card(icon_box("fa-car-side", "Lavado rápido", "Un servicio adicional gratuito por tu consumo de combustible."))], grow=1),
+        col([card(icon_box("fa-coffee", "Oasis", "Un cafecito o un fresquito por tu visita."))], grow=1),
+        col([card(icon_box("fa-charging-station", "Estación de carga", "¿Usas vehículo eléctrico? Somos especialistas en mover a Guatemala."))], grow=1),
+    ], gap=32))
     services_cta = row([col([button("Ver todos los servicios", "/servicios/", style="ghost")], grow=0)], gap=0, align_items="center")
     services_cta["settings"]["flex_justify_content"] = "center"
     services_section = section([serv_title, serv_lead, services, services2, services_cta], bg=SURFACE, padding=(96, 24))
 
     # Identity quote
-    quote = animate(heading(
+    quote = reveal(heading(
         "“Cada ruta y cada kilómetro lo recorremos con la fuerza y la determinación "
         "de un rinoceronte, siempre vigilantes y con la vista hacia adelante.”",
         tag="h2", align="center", color="#FFFFFF", size=34,
-    ), "fadeIn")
+    ))
     quote_sub = text("Especialistas en mover a Guatemala.", align="center", color="#C9D3DE")
     quote_section = section([quote, quote_sub], bg=NAVY_DEEP, padding=(112, 24))
 
     # Final CTA
-    cta_h = animate(heading("Visítanos y prueba nuestro servicio completo, gratis.", tag="h2", align="center", color="#FFFFFF", size=36), "fadeInUp")
+    cta_h = reveal(heading("Visítanos y prueba nuestro servicio completo, gratis.", tag="h2", align="center", color="#FFFFFF", size=36))
     cta_btns = row([
         col([button("Encuentra tu estación", "/ubicaciones/", style="solid-light")], grow=0),
         col([button("Llámanos: +502 2318-2222", "tel:+50223182222", style="outline-light")], grow=0),
@@ -405,9 +415,9 @@ def build_inicio():
 # QUIENES SOMOS
 # ===========================================================================
 def build_quienes_somos():
-    hero_copy = animate(col([
+    hero_copy = reveal_group(col([
         text("¿QUIÉNES SOMOS?", color=RED),
-        heading("Fundado desde 1998 y de origen 100% guatemalteco.", tag="h1", size=44),
+        heading("Fundado desde 1998 y de origen 100% guatemalteco.", tag="h1", size=48),
         text(
             "Desarrollamos el valor del servicio completo en el mercado de "
             "combustibles. Nuestro recurso más valioso es el talento humano: al "
@@ -415,10 +425,10 @@ def build_quienes_somos():
             "nacional, impulsando el desarrollo social del país.",
             color="#3A4550",
         ),
-    ], grow=1), "fadeInUp")
-    hero_photo = animate(col([image_widget("quienes-somos-1.jpg", "Equipo Don Arturo en estación de servicio")], grow=1), "fadeIn", 150)
+    ], grow=1))
+    hero_photo = reveal(card(col([image_widget("quienes-somos-1.jpg", "Equipo Don Arturo en estación de servicio")], grow=1)))
     hero_row = row([hero_copy, hero_photo], gap=56, align_items="center")
-    hero_section = section([hero_row], bg=BASE, padding=(112, 24), gap=0)
+    hero_section = glow(section([hero_row], bg=BASE, padding=(112, 24), gap=0))
 
     commitment = text(
         "Nuestro compromiso es seguir creciendo junto a los guatemaltecos y "
@@ -432,10 +442,10 @@ def build_quienes_somos():
     commitment_section = section([commitment], bg=SURFACE, padding=(72, 24), width="boxed")
 
     # Identidad
-    id_photo = col([image_widget("logo-da-2022.png", "Logotipo Gasolineras Don Arturo")], grow=1)
-    id_copy = col([
+    id_photo = reveal(card(col([image_widget("logo-da-2022.png", "Logotipo Gasolineras Don Arturo")], grow=1)))
+    id_copy = reveal(col([
         text("NUESTRA IDENTIDAD", color=RED),
-        heading("Pasión, confianza y determinación.", tag="h2", size=36),
+        heading("Pasión, confianza y determinación.", tag="h2", size=40),
         text(
             "La pasión, representada por el color rojo, y la confianza, "
             "representada por el color azul, conforman los pilares de nuestra "
@@ -444,22 +454,22 @@ def build_quienes_somos():
             "nuestro ímpetu, deseo de sobresalir y avanzar.",
             color="#3A4550",
         ),
-    ], grow=1)
+    ], grow=1))
     id_row = row([id_copy, id_photo], gap=56, align_items="center")
     id_section = section([id_row], bg=BASE, padding=(96, 24), gap=0)
 
     # Historia
     years = ["1998", "2004", "2008", "2012", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
-    year_chips = row([col([heading(y, tag="h4", align="center", size=20)], grow=0) for y in years], gap=20, align_items="center")
+    year_chips = reveal_group(row([col([card(heading(y, tag="h4", align="center", size=20), pad=(14, 22))], grow=0) for y in years], gap=20, align_items="center"))
     year_chips["settings"]["flex_justify_content"] = "center"
-    history_title = heading("Nuestra historia", tag="h2", align="center", size=36)
+    history_title = reveal(heading("Nuestra historia", tag="h2", align="center", size=40))
     history_lead = text("28 años acompañando a los guatemaltecos en cada ruta.", align="center", color="#3A4550")
     history_section = section([history_title, history_lead, year_chips], bg=SURFACE, padding=(96, 24))
 
     # Arturo y Aurora
-    aa_photo = col([image_widget("arturo-y-aurora.png", "Arturo y Aurora, rinocerontes blancos del Zoológico La Aurora")], grow=1)
-    aa_copy = col([
-        heading("Arturo y Aurora", tag="h2", size=32),
+    aa_photo = reveal(card(col([image_widget("arturo-y-aurora.png", "Arturo y Aurora, rinocerontes blancos del Zoológico La Aurora")], grow=1)))
+    aa_copy = reveal(col([
+        heading("Arturo y Aurora", tag="h2", size=34),
         text(
             "En 2018, junto al Zoológico La Aurora, tuvimos la oportunidad de "
             "recibir en Guatemala a dos rinocerontes blancos provenientes de "
@@ -468,12 +478,12 @@ def build_quienes_somos():
             "aportando a la conservación de las mismas.",
             color="#3A4550",
         ),
-    ], grow=1)
+    ], grow=1))
     aa_row = row([aa_copy, aa_photo], gap=56, align_items="center")
     aa_section = section([aa_row], bg=BASE, padding=(96, 24), gap=0)
 
     # Nuestra gente
-    people_title = heading("Nuestra gente", tag="h2", align="center", size=36)
+    people_title = reveal(heading("Nuestra gente", tag="h2", align="center", size=40))
     people_lead = text(
         "Desde el 2019, cada 21 de mayo celebramos el Día del Especialista: un "
         "homenaje al esfuerzo y trabajo que hacen día con día en las estaciones "
@@ -481,10 +491,10 @@ def build_quienes_somos():
         "receta especial de queso, doble pepperoni y queso en la orilla.",
         align="center", color="#3A4550",
     )
-    people_photos = row([
-        col([image_widget("especialista.jpg", "Especialista Don Arturo")], grow=1),
-        col([image_widget("quienes-somos-2.jpg", "Equipo Don Arturo")], grow=1),
-    ], gap=32)
+    people_photos = reveal_group(row([
+        col([card(image_widget("especialista.jpg", "Especialista Don Arturo"))], grow=1),
+        col([card(image_widget("quienes-somos-2.jpg", "Equipo Don Arturo"))], grow=1),
+    ], gap=32))
     people_cta = row([col([button("¿Quieres pertenecer a nuestro equipo?", "/contacto/")], grow=0)], gap=0)
     people_cta["settings"]["flex_justify_content"] = "center"
     people_section = section([people_title, people_lead, people_photos, people_cta], bg=SURFACE, padding=(96, 24))
@@ -499,7 +509,7 @@ def build_quienes_somos():
 # UBICACIONES
 # ===========================================================================
 def build_ubicaciones():
-    hero_copy = animate(col([
+    hero_copy = reveal_group(col([
         text("UBICACIONES", color=RED),
         heading("+160 estaciones de servicio", tag="h1", size=48),
         text(
@@ -509,10 +519,10 @@ def build_ubicaciones():
             color="#3A4550",
         ),
         row([col([button("Llámanos: +502 2318-2222", "tel:+50223182222")], grow=0)], gap=0),
-    ], grow=1), "fadeInUp")
-    hero_photo = animate(col([image_widget("mapa-cobertura.png", "Mapa de cobertura de Gasolineras Don Arturo")], grow=1), "fadeIn", 150)
+    ], grow=1))
+    hero_photo = reveal(card(col([image_widget("mapa-cobertura.png", "Mapa de cobertura de Gasolineras Don Arturo")], grow=1)))
     hero_row = row([hero_copy, hero_photo], gap=56, align_items="center")
-    hero_section = section([hero_row], bg=BASE, padding=(112, 24), gap=0)
+    hero_section = glow(section([hero_row], bg=BASE, padding=(112, 24), gap=0))
 
     departments = [
         "Guatemala", "Sacatepéquez", "Chimaltenango", "Escuintla", "Retalhuleu",
@@ -565,19 +575,19 @@ def build_ubicaciones():
 # SERVICIOS (summary)
 # ===========================================================================
 def build_servicios():
-    hero_copy = animate(col([
+    hero_copy = reveal_group(col([
         text("SERVICIOS", color=RED),
-        heading("Servicios adicionales, por tu confianza", tag="h1", size=44),
+        heading("Servicios adicionales, por tu confianza", tag="h1", size=48),
         text(
             "Además de tu servicio completo gratis, tenemos una amplia gama de "
             "servicios que ponemos a tu disposición en nuestras estaciones. "
             "¡Gracias por tu confianza!",
             color="#3A4550",
         ),
-    ], grow=1), "fadeInUp")
-    hero_photo = animate(col([image_widget("centro-de-moto.jpg", "Centro de Moto Don Arturo")], grow=1), "fadeIn", 150)
+    ], grow=1))
+    hero_photo = reveal(card(col([image_widget("centro-de-moto.jpg", "Centro de Moto Don Arturo")], grow=1)))
     hero_row = row([hero_copy, hero_photo], gap=56, align_items="center")
-    hero_section = section([hero_row], bg=BASE, padding=(112, 24), gap=0)
+    hero_section = glow(section([hero_row], bg=BASE, padding=(112, 24), gap=0))
 
     services = [
         ("fa-truck-moving", "Control de Flotas", "La plataforma para mantener tu flotilla siempre abastecida de combustible, con control total de consumos."),
@@ -592,8 +602,8 @@ def build_servicios():
     rows = []
     for i in range(0, len(services), 4):
         chunk = services[i:i + 4]
-        cols = [col([icon_box(icon, title, desc)], grow=1) for icon, title, desc in chunk]
-        rows.append(row(cols, gap=32))
+        cols = [col([card(icon_box(icon, title, desc))], grow=1) for icon, title, desc in chunk]
+        rows.append(reveal_group(row(cols, gap=32)))
 
     note = text(
         "Cada servicio tendrá su propia página a detalle en la Fase 2 de este "
@@ -623,9 +633,9 @@ GT_DEPARTMENTS = [
 
 
 def build_contacto():
-    hero_copy = animate(col([
+    hero_copy = reveal_group(col([
         text("CONTACTO", color=RED),
-        heading("Contáctanos", tag="h1", size=44),
+        heading("Contáctanos", tag="h1", size=48),
         text(
             "Escríbenos y una persona de nuestro equipo se comunicará contigo. "
             "También puedes llamarnos o visitarnos directamente.",
@@ -637,7 +647,7 @@ def build_contacto():
             "<a href=\"mailto:info@somosdonarturo.gt\" style=\"color:" + BLUE + "\">info@somosdonarturo.gt</a>",
             color="#3A4550",
         ),
-    ], grow=1), "fadeInUp")
+    ], grow=1))
 
     form_fields = [
         {"_id": eid(), "custom_id": "nombre", "field_label": "Nombre y Apellido", "field_type": "text", "required": "true", "width": "100"},
@@ -656,10 +666,11 @@ def build_contacto():
         "button_width": "100",
     })
 
-    form_col = col([contact_form], grow=1)
+    form_col = card(col([contact_form], grow=1))
+    form_col["settings"]["padding"] = px(40, 32)
     copy_col = col([hero_copy], grow=1)
     top_row = row([copy_col, form_col], gap=56, align_items="flex-start")
-    top_section = section([top_row], bg=BASE, padding=(112, 24), gap=0)
+    top_section = glow(section([top_row], bg=BASE, padding=(112, 24), gap=0))
 
     map_embed = widget("google_maps", {
         "address": "3ra. calle 6-31 zona 8, Mixco, Guatemala",

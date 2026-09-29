@@ -1,7 +1,8 @@
 /**
  * Don Arturo — brand tokens and small enhancements Elementor's UI doesn't cover.
- * Page layout, sections and animation are built and edited in Elementor Pro;
- * this file only carries what has to live outside the page builder.
+ * Page layout, sections and content are built and edited in Elementor Pro;
+ * this file carries what has to live outside the page builder: fonts,
+ * the hero glow/gradient, card depth, and GSAP-driven motion hooks.
  */
 
 :root {
@@ -16,24 +17,24 @@
 	--da-ink-soft: #4B5563;
 	--da-line: #E4DED2;
 
-	--da-font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
-	--da-font-body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+	--da-font-display: "Outfit", "Helvetica Neue", Arial, sans-serif;
+	--da-font-body: "Rubik", "Helvetica Neue", Arial, sans-serif;
 }
 
 @font-face {
-	font-family: "Space Grotesk";
+	font-family: "Outfit";
 	font-style: normal;
-	font-weight: 300 700;
+	font-weight: 300 800;
 	font-display: swap;
-	src: url("../fonts/space-grotesk-var.woff2") format("woff2");
+	src: url("../fonts/outfit-var.woff2") format("woff2");
 }
 
 @font-face {
-	font-family: "Work Sans";
+	font-family: "Rubik";
 	font-style: normal;
 	font-weight: 300 700;
 	font-display: swap;
-	src: url("../fonts/work-sans-var.woff2") format("woff2");
+	src: url("../fonts/rubik-var.woff2") format("woff2");
 }
 
 body {
@@ -45,7 +46,7 @@ body {
 h1, h2, h3, h4, h5, h6,
 .elementor-heading-title {
 	font-family: var(--da-font-display);
-	letter-spacing: -0.01em;
+	letter-spacing: -0.02em;
 }
 
 /* Links and buttons get a quiet, consistent press/hover feel that Elementor's
@@ -67,6 +68,85 @@ a,
 
 .da-header.is-scrolled {
 	box-shadow: 0 1px 0 var(--da-line), 0 12px 24px -18px rgba(11, 45, 82, 0.35);
+}
+
+/* ---------------------------------------------------------------------
+ * Hero glow — a radial gradient mesh in brand blue/red at low opacity,
+ * the thing a flat solid background is missing next to the Dribbble-style
+ * reference. Sits behind the hero content via the "da-glow" class applied
+ * to the hero container's Advanced > CSS Classes field in Elementor.
+ * ------------------------------------------------------------------- */
+.da-glow {
+	position: relative;
+	overflow: hidden;
+}
+
+.da-glow::before,
+.da-glow::after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(70px);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.da-glow::before {
+	width: 46vw;
+	height: 46vw;
+	max-width: 640px;
+	max-height: 640px;
+	top: -14%;
+	right: -10%;
+	background: radial-gradient(circle, rgba(0, 83, 154, 0.22) 0%, rgba(0, 83, 154, 0) 70%);
+}
+
+.da-glow::after {
+	width: 32vw;
+	height: 32vw;
+	max-width: 440px;
+	max-height: 440px;
+	bottom: -16%;
+	left: -8%;
+	background: radial-gradient(circle, rgba(198, 43, 31, 0.14) 0%, rgba(198, 43, 31, 0) 70%);
+}
+
+.da-glow > .e-con-inner,
+.da-glow > .elementor-container {
+	position: relative;
+	z-index: 1;
+}
+
+/* Floating card depth — applied via the "da-card" CSS class on icon-box /
+   stat columns so they read as raised modules, not a flat grid. */
+.da-card {
+	background: var(--da-surface);
+	border-radius: 16px;
+	box-shadow: 0 1px 2px rgba(11, 45, 82, 0.06), 0 16px 32px -20px rgba(11, 45, 82, 0.22);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.da-card--dark {
+	background: rgba(255, 255, 255, 0.06);
+	box-shadow: none;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* GSAP drives the hover lift (see motion.js); this just declares the
+   property so the very first paint (before JS attaches) doesn't jump. */
+.da-card,
+.da-card--dark {
+	will-change: transform;
+}
+
+/* Elements animated by motion.js start hidden via inline style set before
+   paint (see motion.js), so there is no flash of visible content if JS is
+   slow; if JS never runs (blocked), this rule guarantees content is still
+   shown. */
+.da-js-off .da-reveal,
+.da-js-off .da-reveal-group > * {
+	opacity: 1 !important;
+	transform: none !important;
 }
 
 /* Respect reduced motion for anything Elementor's own controls miss. */

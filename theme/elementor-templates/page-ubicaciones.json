@@ -20,7 +20,8 @@
           "isLinked": false
         },
         "background_background": "classic",
-        "background_color": "#F7F4EE"
+        "background_color": "#F7F4EE",
+        "css_classes": "da-glow"
       },
       "elements": [
         {
@@ -53,7 +54,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "css_classes": "da-reveal-group"
               },
               "elements": [
                 {
@@ -158,8 +159,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeIn",
-                "_animation_delay": 150
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {

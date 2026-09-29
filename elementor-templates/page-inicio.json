@@ -13,14 +13,15 @@
         },
         "padding": {
           "unit": "px",
-          "top": "120",
+          "top": "140",
           "right": "24",
-          "bottom": "120",
+          "bottom": "140",
           "left": "24",
           "isLinked": false
         },
         "background_background": "classic",
-        "background_color": "#F7F4EE"
+        "background_color": "#F7F4EE",
+        "css_classes": "da-glow"
       },
       "elements": [
         {
@@ -52,7 +53,8 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "css_classes": "da-reveal-group"
               },
               "elements": [
                 {
@@ -61,8 +63,7 @@
                   "widgetType": "text-editor",
                   "settings": {
                     "editor": "<p>28 AÑOS DE SERVICIO COMPLETO</p>",
-                    "text_color": "#C62B1F",
-                    "_animation": "fadeInUp"
+                    "text_color": "#C62B1F"
                   },
                   "elements": []
                 },
@@ -76,10 +77,8 @@
                     "typography_typography": "custom",
                     "typography_font_size": {
                       "unit": "px",
-                      "size": 56
-                    },
-                    "_animation": "fadeInUp",
-                    "_animation_delay": 90
+                      "size": 64
+                    }
                   },
                   "elements": []
                 },
@@ -89,9 +88,7 @@
                   "widgetType": "text-editor",
                   "settings": {
                     "editor": "<p>Desde 1998, la marca guatemalteca de estaciones de servicio que acompaña a los guatemaltecos en sus rutas cada día. Combustible de alta calidad, a un precio justo y de forma exacta.</p>",
-                    "text_color": "#3A4550",
-                    "_animation": "fadeInUp",
-                    "_animation_delay": 180
+                    "text_color": "#3A4550"
                   },
                   "elements": []
                 },
@@ -119,9 +116,7 @@
                       "bottom": "0",
                       "left": "0",
                       "isLinked": false
-                    },
-                    "_animation": "fadeInUp",
-                    "_animation_delay": 270
+                    }
                   },
                   "elements": [
                     {
@@ -215,8 +210,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeIn",
-                "_animation_delay": 200
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {
@@ -282,7 +276,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -295,8 +290,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -312,7 +306,16 @@
                     "description_text": "Estaciones de servicio",
                     "position": "top",
                     "title_color": "#FFFFFF",
-                    "description_text_color": "#C9D3DE"
+                    "css_classes": "da-card da-card--dark",
+                    "description_text_color": "#C9D3DE",
+                    "padding": {
+                      "unit": "px",
+                      "top": "28",
+                      "right": "20",
+                      "bottom": "28",
+                      "left": "20",
+                      "isLinked": false
+                    }
                   },
                   "elements": []
                 }
@@ -329,9 +332,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 90
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -347,7 +348,16 @@
                     "description_text": "Departamentos",
                     "position": "top",
                     "title_color": "#FFFFFF",
-                    "description_text_color": "#C9D3DE"
+                    "css_classes": "da-card da-card--dark",
+                    "description_text_color": "#C9D3DE",
+                    "padding": {
+                      "unit": "px",
+                      "top": "28",
+                      "right": "20",
+                      "bottom": "28",
+                      "left": "20",
+                      "isLinked": false
+                    }
                   },
                   "elements": []
                 }
@@ -364,9 +374,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 180
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -382,7 +390,16 @@
                     "description_text": "Años de servicio",
                     "position": "top",
                     "title_color": "#FFFFFF",
-                    "description_text_color": "#C9D3DE"
+                    "css_classes": "da-card da-card--dark",
+                    "description_text_color": "#C9D3DE",
+                    "padding": {
+                      "unit": "px",
+                      "top": "28",
+                      "right": "20",
+                      "bottom": "28",
+                      "left": "20",
+                      "isLinked": false
+                    }
                   },
                   "elements": []
                 }
@@ -399,9 +416,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 270
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -417,7 +432,16 @@
                     "description_text": "Familias guatemaltecas",
                     "position": "top",
                     "title_color": "#FFFFFF",
-                    "description_text_color": "#C9D3DE"
+                    "css_classes": "da-card da-card--dark",
+                    "description_text_color": "#C9D3DE",
+                    "padding": {
+                      "unit": "px",
+                      "top": "28",
+                      "right": "20",
+                      "bottom": "28",
+                      "left": "20",
+                      "isLinked": false
+                    }
                   },
                   "elements": []
                 }
@@ -466,7 +490,7 @@
               "unit": "px",
               "size": 40
             },
-            "_animation": "fadeInUp"
+            "css_classes": "da-reveal"
           },
           "elements": []
         },
@@ -497,7 +521,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -510,8 +535,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -525,7 +549,8 @@
                     },
                     "title_text": "Combustibles Ultra",
                     "description_text": "Nuestros combustibles ahora con Ultra, el aditivo de los guatemaltecos.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -542,9 +567,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 90
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -558,7 +581,8 @@
                     },
                     "title_text": "Lubricantes",
                     "description_text": "Conoce el amplio catálogo de productos para el cuidado de tu motor.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -575,9 +599,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 180
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -591,7 +613,8 @@
                     },
                     "title_text": "Rinobilletes",
                     "description_text": "Nuestro combustible digital: lleva el control de tus consumos o regala en toda ocasión.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -657,7 +680,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "css_classes": "da-reveal"
               },
               "elements": [
                 {
@@ -724,8 +747,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeIn",
-                "_animation_delay": 100
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {
@@ -788,7 +810,7 @@
               "unit": "px",
               "size": 40
             },
-            "_animation": "fadeInUp"
+            "css_classes": "da-reveal"
           },
           "elements": []
         },
@@ -819,7 +841,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -832,8 +855,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -847,7 +869,8 @@
                     },
                     "title_text": "Control de Flotas",
                     "description_text": "La plataforma para mantener tu flotilla siempre abastecida de combustible.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -864,9 +887,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 90
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -880,7 +901,8 @@
                     },
                     "title_text": "Taller de Moto",
                     "description_text": "Mantén tu moto siempre al 100.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -897,9 +919,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 180
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -913,7 +933,8 @@
                     },
                     "title_text": "Doña Aurora",
                     "description_text": "Nuestras tiendas de conveniencia con el toque guatemalteco.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -939,7 +960,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -952,8 +974,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -967,7 +988,8 @@
                     },
                     "title_text": "Lavado rápido",
                     "description_text": "Un servicio adicional gratuito por tu consumo de combustible.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -984,9 +1006,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 90
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -1000,7 +1020,8 @@
                     },
                     "title_text": "Oasis",
                     "description_text": "Un cafecito o un fresquito por tu visita.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -1017,9 +1038,7 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow",
-                "_animation": "fadeInUp",
-                "_animation_delay": 180
+                "_flex_size": "grow"
               },
               "elements": [
                 {
@@ -1033,7 +1052,8 @@
                     },
                     "title_text": "Estación de carga",
                     "description_text": "¿Usas vehículo eléctrico? Somos especialistas en mover a Guatemala.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -1149,7 +1169,7 @@
               "unit": "px",
               "size": 34
             },
-            "_animation": "fadeIn"
+            "css_classes": "da-reveal"
           },
           "elements": []
         },
@@ -1204,7 +1224,7 @@
               "unit": "px",
               "size": 36
             },
-            "_animation": "fadeInUp"
+            "css_classes": "da-reveal"
           },
           "elements": []
         },

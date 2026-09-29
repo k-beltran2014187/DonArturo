@@ -20,7 +20,8 @@
           "isLinked": false
         },
         "background_background": "classic",
-        "background_color": "#F7F4EE"
+        "background_color": "#F7F4EE",
+        "css_classes": "da-glow"
       },
       "elements": [
         {
@@ -53,7 +54,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeInUp"
+                "css_classes": "da-reveal-group"
               },
               "elements": [
                 {
@@ -76,7 +77,7 @@
                     "typography_typography": "custom",
                     "typography_font_size": {
                       "unit": "px",
-                      "size": 44
+                      "size": 48
                     }
                   },
                   "elements": []
@@ -105,8 +106,7 @@
                   "size": 100
                 },
                 "_flex_size": "grow",
-                "_animation": "fadeIn",
-                "_animation_delay": 150
+                "css_classes": "da-card da-reveal"
               },
               "elements": [
                 {
@@ -172,7 +172,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -199,7 +200,8 @@
                     },
                     "title_text": "Control de Flotas",
                     "description_text": "La plataforma para mantener tu flotilla siempre abastecida de combustible, con control total de consumos.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -230,7 +232,8 @@
                     },
                     "title_text": "Estación de Carga",
                     "description_text": "¿Usas vehículo eléctrico? Somos especialistas en mover a Guatemala, también en la ruta eléctrica.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -261,7 +264,8 @@
                     },
                     "title_text": "Centro de Moto",
                     "description_text": "Taller especializado para mantener tu moto siempre al 100.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -292,7 +296,8 @@
                     },
                     "title_text": "Lavado",
                     "description_text": "Lavado exterior con espuma especial + aspirado interior, gratis por tu consumo mínimo en combustible.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -318,7 +323,8 @@
             "width": {
               "unit": "%",
               "size": 100
-            }
+            },
+            "css_classes": "da-reveal-group"
           },
           "elements": [
             {
@@ -345,7 +351,8 @@
                     },
                     "title_text": "Oasis",
                     "description_text": "Un cafecito o un fresquito por tu visita — disponible en estaciones seleccionadas del interior.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -376,7 +383,8 @@
                     },
                     "title_text": "Doña Aurora",
                     "description_text": "Nuestras tiendas de conveniencia, con el toque guatemalteco.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -407,7 +415,8 @@
                     },
                     "title_text": "Rinobilletes",
                     "description_text": "Combustible digital: compra desde donde estés y canjea en cualquiera de nuestras estaciones.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }
@@ -438,7 +447,8 @@
                     },
                     "title_text": "Combustible y Lubricantes",
                     "description_text": "Combustibles con Ultra, el aditivo de los guatemaltecos, y un amplio catálogo de lubricantes.",
-                    "position": "top"
+                    "position": "top",
+                    "css_classes": "da-card"
                   },
                   "elements": []
                 }

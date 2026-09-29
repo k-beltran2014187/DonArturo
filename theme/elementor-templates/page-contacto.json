@@ -20,7 +20,8 @@
           "isLinked": false
         },
         "background_background": "classic",
-        "background_color": "#F7F4EE"
+        "background_color": "#F7F4EE",
+        "css_classes": "da-glow"
       },
       "elements": [
         {
@@ -66,7 +67,7 @@
                       "size": 100
                     },
                     "_flex_size": "grow",
-                    "_animation": "fadeInUp"
+                    "css_classes": "da-reveal-group"
                   },
                   "elements": [
                     {
@@ -89,7 +90,7 @@
                         "typography_typography": "custom",
                         "typography_font_size": {
                           "unit": "px",
-                          "size": 44
+                          "size": 48
                         }
                       },
                       "elements": []
@@ -130,7 +131,16 @@
                   "unit": "%",
                   "size": 100
                 },
-                "_flex_size": "grow"
+                "_flex_size": "grow",
+                "css_classes": "da-card",
+                "padding": {
+                  "unit": "px",
+                  "top": "40",
+                  "right": "32",
+                  "bottom": "40",
+                  "left": "32",
+                  "isLinked": false
+                }
               },
               "elements": [
                 {
