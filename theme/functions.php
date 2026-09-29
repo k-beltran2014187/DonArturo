@@ -260,6 +260,7 @@ function donarturo_provision_pages() {
 		$existing = get_page_by_path( $slug );
 		if ( $existing ) {
 			donarturo_ensure_full_width_template( $existing->ID );
+			donarturo_fix_image_domain_on( $existing->ID );
 			$ids[ $slug ] = $existing->ID;
 			continue;
 		}
@@ -305,11 +306,17 @@ function donarturo_provision_theme_parts() {
 	);
 
 	foreach ( $parts as $type => $part ) {
+		// NOTE: WP_Query has no native exact-title filter — passing 'title'
+		// here silently does nothing, so this used to match ANY existing
+		// elementor_library post (e.g. one imported by hand) and skip
+		// creating the header/footer entirely. Match on our own meta key
+		// instead, which only a post this function created can have.
 		$found = get_posts(
 			array(
 				'post_type'      => 'elementor_library',
 				'post_status'    => 'publish',
-				'title'          => $part['title'],
+				'meta_key'       => '_elementor_template_type',
+				'meta_value'     => $type,
 				'posts_per_page' => 1,
 				'fields'         => 'ids',
 			)
@@ -382,25 +389,16 @@ function donarturo_provision_menu_and_front_page( $page_ids ) {
 	}
 }
 
+/**
+ * Runs on every load. Each step below already checks for its own existing
+ * data before creating anything (by slug, by meta key, by menu name), so
+ * there is no "already provisioned" flag to get out of sync — re-running
+ * this is always safe and is what lets it self-heal (fix a wrong image
+ * domain, create a header that a buggy earlier version skipped, etc.)
+ * without the client having to do anything.
+ */
 function donarturo_provision_site() {
 	if ( ! did_action( 'elementor/loaded' ) || ! class_exists( '\Elementor\Plugin' ) ) {
-		return;
-	}
-	if ( get_option( 'donarturo_provisioned' ) ) {
-		// Still worth checking on every load: the header/footer in case
-		// Elementor Pro was activated after the first run, and the page
-		// template on pages created before this fix shipped.
-		donarturo_provision_theme_parts();
-		foreach ( array( 'inicio', 'quienes-somos', 'ubicaciones', 'servicios', 'contacto' ) as $slug ) {
-			$page = get_page_by_path( $slug );
-			if ( $page ) {
-				donarturo_ensure_full_width_template( $page->ID );
-				donarturo_fix_image_domain_on( $page->ID );
-			}
-		}
-		foreach ( get_posts( array( 'post_type' => 'elementor_library', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids' ) ) as $tpl_id ) {
-			donarturo_fix_image_domain_on( $tpl_id );
-		}
 		return;
 	}
 
@@ -408,6 +406,8 @@ function donarturo_provision_site() {
 	donarturo_provision_theme_parts();
 	donarturo_provision_menu_and_front_page( $page_ids );
 
-	update_option( 'donarturo_provisioned', true );
+	foreach ( get_posts( array( 'post_type' => 'elementor_library', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids' ) ) as $tpl_id ) {
+		donarturo_fix_image_domain_on( $tpl_id );
+	}
 }
 add_action( 'init', 'donarturo_provision_site', 30 );
