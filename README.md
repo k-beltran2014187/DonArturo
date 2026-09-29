@@ -2,9 +2,11 @@
 
 Rediseño del sitio de **Gasolineras Don Arturo** (`somosdonarturo.gt`), construido
 para que el cliente administre el contenido con **Elementor Pro** después de la
-entrega. No es un tema a medida como otros proyectos: es un tema hijo de
-**Hello Elementor** + páginas construidas como plantillas de Elementor, ambos
-100% editables desde el editor visual.
+entrega. Es un tema hijo de **Hello Elementor**, pero **no requiere armar nada a
+mano**: al activarlo (con Elementor + Elementor Pro ya instalados), el tema
+crea solo las 5 páginas de Fase 1 con su contenido, el menú, el header/footer
+y la portada. Todo queda 100% editable después desde el editor visual de
+Elementor Pro.
 
 ## Qué incluye esta Fase 1
 
@@ -57,50 +59,50 @@ dist/donarturo.zip        Tema empaquetado, listo para subir a WordPress
 ## Instalación en Hostinger + WordPress
 
 1. **WordPress + Elementor Pro**
-   - En hPanel de Hostinger, confirma que el sitio `somosdonarturo.gt` corre
-     WordPress (ya lo hace).
+   - En hPanel de Hostinger, confirma que el sitio corre WordPress.
    - Instala el plugin gratuito **Elementor** y luego **Elementor Pro**
      (licencia del cliente) desde *Plugins → Añadir nuevo → Subir plugin*.
+     Actívalos ambos.
 2. **Tema**
    - Instala primero el tema padre **Hello Elementor** desde
      *Apariencia → Temas → Añadir nuevo* (buscar "Hello Elementor", de Elementor.com).
+     No hace falta activarlo.
    - Sube `dist/donarturo.zip` desde *Apariencia → Temas → Añadir nuevo → Subir tema*.
-   - Activa **Don Arturo** (no actives Hello Elementor directamente).
-3. **Menú**
-   - Ve a *Apariencia → Menús*, crea un menú llamado **principal** con estos
-     5 elementos, en este orden: Inicio, ¿Quiénes Somos?, Ubicaciones,
-     Servicios, Contacto. Asígnalo como ubicación "Principal" si el tema lo
-     pide (el header/footer ya lo referencian por su nombre exacto: `principal`).
-4. **Páginas**
-   - Crea 5 páginas con estos *slugs* exactos (para que los enlaces internos
-     de las plantillas funcionen): `inicio` (o usa Inicio como página de
-     portada), `quienes-somos`, `ubicaciones`, `servicios`, `contacto`.
-   - Abre cada página con **Editar con Elementor**.
-5. **Importar las plantillas**
-   - En el editor de Elementor: ícono de carpeta (Insertar plantilla) →
-     pestaña **Mis plantillas** → **Importar plantillas** → sube el `.json`
-     correspondiente desde `elementor-templates/` (uno por página).
-   - Insértala en la página y publica.
-   - Para el header y footer: *Plantillas → Theme Builder* (Elementor Pro) →
-     crea una plantilla de tipo **Header**, importa `header.json` dentro de
-     ella, condición de visualización "Todo el sitio". Repite con **Footer**
-     y `footer.json`.
-6. **Página de inicio**
-   - *Ajustes → Lectura* → "La página de inicio muestra" → Una página
-     estática → selecciona la página Inicio.
-7. **Formulario de contacto**
+   - **Actívalo.** Con esto es suficiente — no hay pasos 3 a 6 que hacer a
+     mano: al activarse, el tema automáticamente:
+     - crea las 5 páginas de Fase 1 (Inicio, ¿Quiénes Somos?, Ubicaciones,
+       Servicios, Contacto) con su contenido y fotos reales ya cargados;
+     - crea el menú **principal** con esas 5 páginas en orden;
+     - crea el header y el footer como plantillas de Elementor Theme Builder,
+       aplicadas a todo el sitio;
+     - define Inicio como página de portada.
+   - Recarga cualquier página del sitio una vez después de activar (esto
+     dispara la creación; si Elementor Pro se activó después del tema, entra
+     a *Apariencia → Personalizar* o recarga el wp-admin una vez más).
+   - Este proceso es seguro de repetir: si algo ya existe (por ejemplo si
+     hiciste pruebas manuales antes), el tema no lo duplica, solo completa lo
+     que falte.
+3. **Formulario de contacto**
    - El widget de formulario en Contacto ya trae los campos reales del sitio
      actual (Nombre y Apellido, Departamento, Correo, Teléfono, No. de
      Factura, Comentarios) y envía a `info@somosdonarturo.gt`. Verifica el
      envío de correo (Elementor Pro → Ajustes del formulario) y, si el
      hosting bloquea `wp_mail`, conecta un SMTP (plugin WP Mail SMTP) para
      que los correos no caigan en spam.
-8. **Imágenes**
-   - Las fotos ya están en `theme/assets/images/` y se ven de inmediato tras
-     importar. Para que el cliente pueda reemplazarlas fácilmente desde
-     Elementor, se recomienda subirlas una vez a la Biblioteca de medios y
-     reemplazar cada imagen en el widget correspondiente (clic → Elegir
-     imagen) — es opcional, el sitio funciona igual sin este paso.
+4. **Imágenes** (opcional)
+   - Las fotos ya están en `theme/assets/images/` y se ven de inmediato. Para
+     que el cliente pueda reemplazarlas fácilmente desde Elementor, se
+     recomienda subirlas una vez a la Biblioteca de medios y reemplazar cada
+     imagen en el widget correspondiente (clic → Elegir imagen) — el sitio
+     funciona igual sin este paso.
+
+### Si algo no se crea automáticamente
+
+Poco probable, pero por si acaso: las plantillas `.json` de respaldo siguen
+en `elementor-templates/` (y dentro del zip en `elementor-templates/`) para
+importarlas a mano como antes — *Elementor → Plantillas → Plantillas
+Guardadas → Importar plantillas*, luego insertarlas en la página
+correspondiente desde el editor.
 
 ## Notas honestas sobre el alcance
 

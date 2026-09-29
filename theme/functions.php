@@ -162,3 +162,186 @@ function donarturo_seed_elementor_kit() {
 	}
 }
 add_action( 'init', 'donarturo_seed_elementor_kit', 20 );
+
+/* -------------------------------------------------------------------------
+ * Auto-provisioning: turns "upload zip, activate" into a finished site.
+ * Creates the Phase 1 pages (with their Elementor content already attached),
+ * the header/footer Theme Builder templates, the "principal" menu, and sets
+ * the front page — all on first load after Elementor + Elementor Pro are
+ * active. Every step is idempotent (checked by option flag + existence),
+ * so it never duplicates content and safely no-ops on every later load,
+ * including if Elementor Pro is activated after the theme.
+ * ------------------------------------------------------------------------- */
+
+function donarturo_load_template_content( $filename ) {
+	$path = get_stylesheet_directory() . '/elementor-templates/' . $filename;
+	if ( ! file_exists( $path ) ) {
+		return null;
+	}
+	$data = json_decode( file_get_contents( $path ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	return isset( $data['content'] ) ? $data['content'] : null;
+}
+
+function donarturo_set_elementor_data( $post_id, $content ) {
+	update_post_meta( $post_id, '_elementor_data', wp_slash( wp_json_encode( $content ) ) );
+	update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
+	update_post_meta( $post_id, '_elementor_version', defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.0.0' );
+}
+
+/**
+ * Creates the 5 Phase 1 pages (skips any that already exist by slug) and
+ * returns an array of slug => page ID.
+ */
+function donarturo_provision_pages() {
+	$pages = array(
+		'inicio'         => array( 'title' => 'Inicio', 'file' => 'page-inicio.json' ),
+		'quienes-somos'  => array( 'title' => '¿Quiénes Somos?', 'file' => 'page-quienes-somos.json' ),
+		'ubicaciones'    => array( 'title' => 'Ubicaciones', 'file' => 'page-ubicaciones.json' ),
+		'servicios'      => array( 'title' => 'Servicios', 'file' => 'page-servicios.json' ),
+		'contacto'       => array( 'title' => 'Contacto', 'file' => 'page-contacto.json' ),
+	);
+
+	$ids = array();
+
+	foreach ( $pages as $slug => $page ) {
+		$existing = get_page_by_path( $slug );
+		if ( $existing ) {
+			$ids[ $slug ] = $existing->ID;
+			continue;
+		}
+
+		$post_id = wp_insert_post(
+			array(
+				'post_title'   => $page['title'],
+				'post_name'    => $slug,
+				'post_status'  => 'publish',
+				'post_type'    => 'page',
+				'post_content' => '',
+			)
+		);
+
+		if ( is_wp_error( $post_id ) || ! $post_id ) {
+			continue;
+		}
+
+		$content = donarturo_load_template_content( $page['file'] );
+		if ( $content ) {
+			donarturo_set_elementor_data( $post_id, $content );
+		}
+
+		$ids[ $slug ] = $post_id;
+	}
+
+	return $ids;
+}
+
+/**
+ * Creates the header and footer as Elementor Pro Theme Builder templates,
+ * applied site-wide. No-ops if Elementor Pro's Theme Builder isn't active.
+ */
+function donarturo_provision_theme_parts() {
+	if ( ! class_exists( '\ElementorPro\Plugin' ) ) {
+		return;
+	}
+
+	$parts = array(
+		'header' => array( 'title' => 'Don Arturo — Header', 'file' => 'header.json' ),
+		'footer' => array( 'title' => 'Don Arturo — Footer', 'file' => 'footer.json' ),
+	);
+
+	foreach ( $parts as $type => $part ) {
+		$found = get_posts(
+			array(
+				'post_type'      => 'elementor_library',
+				'post_status'    => 'publish',
+				'title'          => $part['title'],
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+			)
+		);
+		if ( ! empty( $found ) ) {
+			continue;
+		}
+
+		$post_id = wp_insert_post(
+			array(
+				'post_title'   => $part['title'],
+				'post_status'  => 'publish',
+				'post_type'    => 'elementor_library',
+				'post_content' => '',
+			)
+		);
+
+		if ( is_wp_error( $post_id ) || ! $post_id ) {
+			continue;
+		}
+
+		$content = donarturo_load_template_content( $part['file'] );
+		if ( $content ) {
+			donarturo_set_elementor_data( $post_id, $content );
+		}
+
+		update_post_meta( $post_id, '_elementor_template_type', $type );
+		update_post_meta( $post_id, '_elementor_conditions', array( 'include/general' ) );
+
+		if ( taxonomy_exists( 'elementor_library_type' ) ) {
+			wp_set_object_terms( $post_id, $type, 'elementor_library_type' );
+		}
+	}
+}
+
+/**
+ * Creates the "principal" menu (skips if it already exists) with the 5
+ * pages in order, and sets Inicio as the static front page.
+ */
+function donarturo_provision_menu_and_front_page( $page_ids ) {
+	$order = array( 'inicio', 'quienes-somos', 'ubicaciones', 'servicios', 'contacto' );
+
+	if ( ! wp_get_nav_menu_object( 'principal' ) ) {
+		$menu_id = wp_create_nav_menu( 'principal' );
+		if ( ! is_wp_error( $menu_id ) ) {
+			$position = 1;
+			foreach ( $order as $slug ) {
+				if ( empty( $page_ids[ $slug ] ) ) {
+					continue;
+				}
+				wp_update_nav_menu_item(
+					$menu_id,
+					0,
+					array(
+						'menu-item-title'     => get_the_title( $page_ids[ $slug ] ),
+						'menu-item-object'    => 'page',
+						'menu-item-object-id' => $page_ids[ $slug ],
+						'menu-item-type'      => 'post_type',
+						'menu-item-status'    => 'publish',
+						'menu-item-position'  => $position++,
+					)
+				);
+			}
+		}
+	}
+
+	if ( ! empty( $page_ids['inicio'] ) && 'page' !== get_option( 'show_on_front' ) ) {
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $page_ids['inicio'] );
+	}
+}
+
+function donarturo_provision_site() {
+	if ( ! did_action( 'elementor/loaded' ) || ! class_exists( '\Elementor\Plugin' ) ) {
+		return;
+	}
+	if ( get_option( 'donarturo_provisioned' ) ) {
+		// Still worth checking the header/footer in case Elementor Pro was
+		// activated after the first run (they need Pro to exist at all).
+		donarturo_provision_theme_parts();
+		return;
+	}
+
+	$page_ids = donarturo_provision_pages();
+	donarturo_provision_theme_parts();
+	donarturo_provision_menu_and_front_page( $page_ids );
+
+	update_option( 'donarturo_provisioned', true );
+}
+add_action( 'init', 'donarturo_provision_site', 30 );

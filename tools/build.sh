@@ -6,6 +6,11 @@ cd "$(dirname "$0")/.."
 
 python3 tools/build_elementor.py
 
+# Keep the theme's bundled copy (used for auto-provisioning on activation)
+# in sync with the generated templates.
+mkdir -p theme/elementor-templates
+cp elementor-templates/*.json theme/elementor-templates/
+
 mkdir -p dist
 rm -f dist/donarturo.zip
 cd theme
