@@ -1,0 +1,678 @@
+/**
+ * Don Arturo — sitio a medida (HTML/CSS propio, empaquetado en un widget
+ * HTML de Elementor por página). Diseño completo, no widgets nativos.
+ */
+
+:root {
+	--navy: #0B2D52;
+	--navy-deep: #071D37;
+	--blue: #00539A;
+	--red: #C62B1F;
+	--red-deep: #A02016;
+	--base: #F7F4EE;
+	--surface: #FFFFFF;
+	--ink: #14181C;
+	--ink-soft: #4B5563;
+	--line: #E4DED2;
+
+	--font-display: "Outfit", "Helvetica Neue", Arial, sans-serif;
+	--font-body: "Rubik", "Helvetica Neue", Arial, sans-serif;
+
+	--container: 1180px;
+	--radius: 18px;
+	--shadow-sm: 0 1px 2px rgba(11, 45, 82, 0.06);
+	--shadow-lg: 0 24px 48px -20px rgba(11, 45, 82, 0.3);
+}
+
+@font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-weight: 300 800;
+	font-display: swap;
+	src: url("../fonts/outfit-var.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Rubik";
+	font-style: normal;
+	font-weight: 300 700;
+	font-display: swap;
+	src: url("../fonts/rubik-var.woff2") format("woff2");
+}
+
+/* Reset the bits of the WordPress/Elementor wrapper that would otherwise
+   fight a full-bleed custom layout. */
+.da-site {
+	font-family: var(--font-body);
+	color: var(--ink);
+	background: var(--base);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+}
+
+.da-site * {
+	box-sizing: border-box;
+}
+
+.da-site h1, .da-site h2, .da-site h3, .da-site h4 {
+	font-family: var(--font-display);
+	color: var(--navy);
+	letter-spacing: -0.02em;
+	line-height: 1.1;
+	margin: 0 0 0.5em;
+}
+
+.da-site p {
+	margin: 0 0 1em;
+	color: var(--ink-soft);
+}
+
+.da-site img {
+	max-width: 100%;
+	display: block;
+}
+
+.da-container {
+	max-width: var(--container);
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+/* ---------------------------------------------------------------- header */
+.da-header {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: rgba(247, 244, 238, 0.9);
+	backdrop-filter: blur(10px);
+	border-bottom: 1px solid transparent;
+	transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.da-header.is-scrolled {
+	background: rgba(255, 255, 255, 0.95);
+	border-color: var(--line);
+	box-shadow: 0 8px 24px -16px rgba(11, 45, 82, 0.35);
+}
+
+.da-header__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 16px 24px;
+}
+
+.da-logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 1.15rem;
+	color: var(--navy);
+	text-decoration: none;
+	letter-spacing: -0.01em;
+}
+
+.da-logo__mark {
+	width: 34px;
+	height: 34px;
+	border-radius: 9px;
+	background: linear-gradient(135deg, var(--blue), var(--navy));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-weight: 800;
+	font-size: 1rem;
+	flex: none;
+}
+
+.da-nav {
+	display: flex;
+	align-items: center;
+	gap: 32px;
+}
+
+.da-nav a {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: var(--ink);
+	text-decoration: none;
+	position: relative;
+	padding: 4px 0;
+	transition: color 0.2s ease;
+}
+
+.da-nav a:hover,
+.da-nav a[aria-current="page"] {
+	color: var(--red);
+}
+
+.da-nav a[aria-current="page"]::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -4px;
+	height: 2px;
+	background: var(--red);
+	border-radius: 2px;
+}
+
+.da-header__cta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 600;
+	font-size: 0.92rem;
+	color: var(--navy);
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.da-header__cta svg {
+	flex: none;
+}
+
+.da-menu-toggle {
+	display: none;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 8px;
+	color: var(--navy);
+}
+
+/* ----------------------------------------------------------------- links */
+.da-site a {
+	color: var(--blue);
+}
+
+/* --------------------------------------------------------------- buttons */
+.da-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 14px 28px;
+	border-radius: 999px;
+	font-family: var(--font-body);
+	font-weight: 600;
+	font-size: 0.95rem;
+	text-decoration: none;
+	cursor: pointer;
+	border: 2px solid transparent;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+	white-space: nowrap;
+}
+
+.da-btn:active {
+	transform: translateY(1px);
+}
+
+.da-btn--primary {
+	background: var(--red);
+	color: #fff;
+	box-shadow: 0 12px 24px -10px rgba(198, 43, 31, 0.55);
+}
+
+.da-btn--primary:hover {
+	background: var(--red-deep);
+}
+
+.da-btn--ghost {
+	background: transparent;
+	color: var(--navy);
+	border-color: var(--line);
+}
+
+.da-btn--ghost:hover {
+	border-color: var(--navy);
+}
+
+.da-btn--on-dark {
+	background: transparent;
+	color: #fff;
+	border-color: rgba(255, 255, 255, 0.4);
+}
+
+.da-btn--on-dark:hover {
+	border-color: #fff;
+}
+
+.da-btn--white {
+	background: #fff;
+	color: var(--navy-deep);
+}
+
+.da-btn--white:hover {
+	background: #EDEBE3;
+}
+
+/* --------------------------------------------------------------- layout */
+.da-section {
+	padding: 96px 0;
+}
+
+.da-section--tight {
+	padding: 64px 0;
+}
+
+.da-section--navy {
+	background: var(--navy);
+	color: #fff;
+}
+
+.da-section--navy h1, .da-section--navy h2, .da-section--navy h3 {
+	color: #fff;
+}
+
+.da-section--navy p {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.da-section--red {
+	background: var(--red);
+	color: #fff;
+}
+
+.da-section--red h1, .da-section--red h2, .da-section--red h3 {
+	color: #fff;
+}
+
+.da-section--surface {
+	background: var(--surface);
+}
+
+.da-eyebrow {
+	display: inline-block;
+	font-weight: 700;
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--red);
+	margin-bottom: 14px;
+}
+
+.da-lede {
+	font-size: 1.15rem;
+	max-width: 60ch;
+}
+
+/* Glow mesh behind hero-style sections */
+.da-glow {
+	position: relative;
+	overflow: hidden;
+}
+
+.da-glow::before,
+.da-glow::after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(80px);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.da-glow::before {
+	width: 640px;
+	height: 640px;
+	top: -18%;
+	right: -12%;
+	background: radial-gradient(circle, rgba(0, 83, 154, 0.24) 0%, rgba(0, 83, 154, 0) 70%);
+}
+
+.da-glow::after {
+	width: 460px;
+	height: 460px;
+	bottom: -18%;
+	left: -10%;
+	background: radial-gradient(circle, rgba(198, 43, 31, 0.15) 0%, rgba(198, 43, 31, 0) 70%);
+}
+
+.da-glow > * {
+	position: relative;
+	z-index: 1;
+}
+
+/* ------------------------------------------------------------------ grid */
+.da-grid {
+	display: grid;
+	gap: 32px;
+}
+
+.da-grid--2 {
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+}
+
+.da-grid--3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.da-grid--4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+/* ------------------------------------------------------------------ hero */
+.da-hero {
+	padding-top: 72px;
+	padding-bottom: 96px;
+}
+
+.da-hero__media {
+	position: relative;
+}
+
+.da-hero__media img {
+	border-radius: 24px;
+	box-shadow: var(--shadow-lg);
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+.da-hero__badge {
+	position: absolute;
+	bottom: -20px;
+	left: -20px;
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: var(--shadow-lg);
+	padding: 18px 22px;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.da-hero__badge-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, var(--blue), var(--navy));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	flex: none;
+}
+
+.da-hero__badge strong {
+	display: block;
+	font-family: var(--font-display);
+	font-size: 1.3rem;
+	color: var(--navy);
+	line-height: 1;
+}
+
+.da-hero__badge span {
+	font-size: 0.78rem;
+	color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------- cards */
+.da-card {
+	background: #fff;
+	border-radius: var(--radius);
+	padding: 32px 28px;
+	box-shadow: var(--shadow-sm), 0 20px 40px -22px rgba(11, 45, 82, 0.28);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	will-change: transform;
+}
+
+.da-card--dark {
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	box-shadow: none;
+}
+
+.da-card__icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, var(--blue), var(--navy));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	margin-bottom: 18px;
+	flex: none;
+}
+
+.da-card--dark .da-card__icon {
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.da-card h3, .da-card h4 {
+	margin-bottom: 8px;
+	font-size: 1.1rem;
+}
+
+.da-card p {
+	margin: 0;
+	font-size: 0.95rem;
+}
+
+.da-card--stat {
+	text-align: center;
+}
+
+.da-card--stat strong {
+	display: block;
+	font-family: var(--font-display);
+	font-size: 2.4rem;
+	color: #fff;
+	line-height: 1;
+	margin-bottom: 6px;
+}
+
+.da-card--stat span {
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* -------------------------------------------------------------- quote */
+.da-quote {
+	text-align: center;
+	max-width: 760px;
+	margin: 0 auto;
+}
+
+.da-quote blockquote {
+	font-family: var(--font-display);
+	font-size: clamp(1.5rem, 3vw, 2.1rem);
+	font-weight: 500;
+	color: #fff;
+	margin: 0 0 20px;
+	line-height: 1.3;
+}
+
+/* ------------------------------------------------------------------ chip */
+.da-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 10px 20px;
+	border-radius: 999px;
+	background: #fff;
+	border: 1px solid var(--line);
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--navy);
+}
+
+.da-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+	justify-content: center;
+}
+
+/* -------------------------------------------------------------- footer */
+.da-footer {
+	background: var(--navy-deep);
+	color: rgba(255, 255, 255, 0.75);
+	padding: 72px 0 32px;
+}
+
+.da-footer h4 {
+	color: #fff;
+	font-size: 1rem;
+	margin-bottom: 16px;
+}
+
+.da-footer a {
+	color: rgba(255, 255, 255, 0.75);
+	text-decoration: none;
+}
+
+.da-footer a:hover {
+	color: #fff;
+}
+
+.da-footer__grid {
+	display: grid;
+	grid-template-columns: 1.4fr 1fr 1fr;
+	gap: 48px;
+	padding-bottom: 48px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.da-footer__nav {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.da-footer__bottom {
+	padding-top: 24px;
+	text-align: center;
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+/* ------------------------------------------------------------------ form */
+.da-form {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 18px;
+}
+
+.da-form__field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.da-form__field--full {
+	grid-column: 1 / -1;
+}
+
+.da-form label {
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--navy);
+}
+
+.da-form input,
+.da-form select,
+.da-form textarea {
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+	padding: 12px 14px;
+	border-radius: 10px;
+	border: 1.5px solid var(--line);
+	background: #fff;
+	color: var(--ink);
+	outline-offset: 2px;
+}
+
+.da-form input:focus,
+.da-form select:focus,
+.da-form textarea:focus {
+	border-color: var(--blue);
+}
+
+.da-form textarea {
+	resize: vertical;
+	min-height: 110px;
+}
+
+/* -------------------------------------------------------------- map */
+.da-map iframe {
+	width: 100%;
+	height: 420px;
+	border: 0;
+	display: block;
+}
+
+/* ---------------------------------------------------------- reveal (JS) */
+/* No permanent opacity:0 rule here on purpose: GSAP's .from() reads the
+   CSS-computed value at tween creation time as the animation's implicit
+   end target. A static CSS opacity:0 on these classes would make GSAP
+   think the "visible" state is ALSO 0 (animating 0 -> 0, permanently
+   invisible) — the initial hidden state must be set by GSAP itself at
+   runtime, not by CSS. This also means content is never invisible-by-
+   default if JS fails to load, which is the safer fallback anyway.*/
+
+/* ------------------------------------------------------------ utilities */
+.da-center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.da-mt-0 { margin-top: 0; }
+.da-stack { display: flex; flex-direction: column; gap: 16px; }
+.da-row { display: flex; align-items: center; gap: 16px; }
+.da-row--wrap { flex-wrap: wrap; }
+.da-row--center { justify-content: center; }
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 960px) {
+	.da-grid--2 { grid-template-columns: 1fr; }
+	.da-grid--3 { grid-template-columns: repeat(2, 1fr); }
+	.da-grid--4 { grid-template-columns: repeat(2, 1fr); }
+	.da-footer__grid { grid-template-columns: 1fr; gap: 32px; }
+	.da-form { grid-template-columns: 1fr; }
+	.da-hero__media { order: -1; }
+}
+
+@media (max-width: 720px) {
+	.da-nav { display: none; }
+	.da-header__cta span { display: none; }
+	.da-menu-toggle { display: inline-flex; }
+	.da-grid--3, .da-grid--4 { grid-template-columns: 1fr; }
+	.da-section { padding: 64px 0; }
+	.da-hero { padding-top: 40px; padding-bottom: 64px; }
+	.da-hero__badge { position: static; margin-top: -40px; margin-left: 20px; width: fit-content; }
+}
+
+.da-nav--open {
+	display: flex !important;
+	position: fixed;
+	inset: 72px 0 0 0;
+	background: var(--base);
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 32px 24px;
+	gap: 8px;
+	z-index: 90;
+	overflow-y: auto;
+}
+
+.da-nav--open a {
+	width: 100%;
+	padding: 14px 0;
+	font-size: 1.1rem;
+	border-bottom: 1px solid var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.da-site *, .da-site *::before, .da-site *::after {
+		animation-duration: 0.001ms !important;
+		transition-duration: 0.001ms !important;
+	}
+}

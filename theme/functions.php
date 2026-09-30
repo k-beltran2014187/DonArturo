@@ -19,10 +19,10 @@ function donarturo_enqueue_assets() {
 	wp_enqueue_style( 'hello-elementor', get_template_directory_uri() . '/style.css', array(), DONARTURO_VERSION );
 
 	wp_enqueue_style(
-		'donarturo-brand',
-		get_stylesheet_directory_uri() . '/assets/css/brand.css',
+		'donarturo-site',
+		get_stylesheet_directory_uri() . '/assets/css/site.css',
 		array( 'hello-elementor' ),
-		donarturo_asset_version( 'assets/css/brand.css' )
+		donarturo_asset_version( 'assets/css/site.css' )
 	);
 
 	wp_enqueue_script(
@@ -40,14 +40,52 @@ function donarturo_enqueue_assets() {
 		array( 'in_footer' => true )
 	);
 	wp_enqueue_script(
-		'donarturo-motion',
-		get_stylesheet_directory_uri() . '/assets/js/motion.js',
+		'donarturo-site',
+		get_stylesheet_directory_uri() . '/assets/js/site.js',
 		array( 'gsap', 'gsap-scrolltrigger' ),
-		donarturo_asset_version( 'assets/js/motion.js' ),
+		donarturo_asset_version( 'assets/js/site.js' ),
 		array( 'in_footer' => true )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'donarturo_enqueue_assets' );
+
+/**
+ * Contact form handler — plain WordPress (admin-post.php + wp_mail), no
+ * Elementor Pro Form widget involved, so there is no internal behavior to
+ * guess: this is the same technique used by countless WP themes/plugins.
+ */
+function donarturo_handle_contact_form() {
+	$to = 'info@somosdonarturo.gt';
+
+	$nombre       = isset( $_POST['nombre'] ) ? sanitize_text_field( wp_unslash( $_POST['nombre'] ) ) : '';
+	$departamento = isset( $_POST['departamento'] ) ? sanitize_text_field( wp_unslash( $_POST['departamento'] ) ) : '';
+	$email        = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+	$telefono     = isset( $_POST['telefono'] ) ? sanitize_text_field( wp_unslash( $_POST['telefono'] ) ) : '';
+	$factura      = isset( $_POST['factura'] ) ? sanitize_text_field( wp_unslash( $_POST['factura'] ) ) : '';
+	$comentarios  = isset( $_POST['comentarios'] ) ? sanitize_textarea_field( wp_unslash( $_POST['comentarios'] ) ) : '';
+
+	$redirect = wp_get_referer() ? wp_get_referer() : home_url( '/contacto/' );
+
+	if ( ! $nombre || ! is_email( $email ) || ! $comentarios ) {
+		wp_safe_redirect( add_query_arg( 'da_error', '1', $redirect ) );
+		exit;
+	}
+
+	$subject = 'Nuevo mensaje de contacto — ' . $nombre;
+	$body    = "Nombre: {$nombre}\n" .
+		"Departamento: {$departamento}\n" .
+		"Correo: {$email}\n" .
+		"Teléfono: {$telefono}\n" .
+		"No. de Factura: {$factura}\n\n" .
+		"Comentarios:\n{$comentarios}\n";
+
+	wp_mail( $to, $subject, $body, array( 'Reply-To: ' . $email ) );
+
+	wp_safe_redirect( add_query_arg( 'da_enviado', '1', $redirect ) );
+	exit;
+}
+add_action( 'admin_post_nopriv_donarturo_contact', 'donarturo_handle_contact_form' );
+add_action( 'admin_post_donarturo_contact', 'donarturo_handle_contact_form' );
 
 /**
  * Preload the two brand fonts used above the fold on every page.
