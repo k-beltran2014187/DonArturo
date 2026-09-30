@@ -11,7 +11,11 @@ import random
 import string
 
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "elementor-templates")
-IMG_BASE = "https://somosdonarturo.gt/wp-content/themes/donarturo/assets/images"
+# The domain where the theme is actually running — these templates are
+# imported by hand into Elementor, so the image URLs baked into the JSON
+# must point at wherever that is *right now* (test subdomain, production,
+# whatever). Override with: DONARTURO_DOMAIN=https://example.com python3 ...
+IMG_BASE = os.environ.get("DONARTURO_DOMAIN", "https://blog.choicebrook.com") + "/wp-content/themes/donarturo/assets/images"
 
 # ---------------------------------------------------------------- brand ---
 NAVY = "#0B2D52"
